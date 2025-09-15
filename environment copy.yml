@@ -1,0 +1,11 @@
+name: RPL
+channels:
+  - conda-forge
+dependencies:
+  - python=3.10
+  - pip
+  - numpy
+  - matplotlib
+  - gym
+  - pip:
+      - -r requirements.txt

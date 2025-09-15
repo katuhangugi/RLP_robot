@@ -1,0 +1,140 @@
+From 6f5d49f21e5fb20878a20d18f62b78f34f749fb4 Mon Sep 17 00:00:00 2001
+From: trobr <trobr@xxx.com>
+Date: Tue, 22 Oct 2024 15:32:39 +0800
+Subject: [PATCH 2/3] =?UTF-8?q?rpl=E4=BF=AE=E6=94=B9?=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+---
+ rpl_environments/rpl_environments/__init__.py | 26 +++++++++----------
+ .../rpl_environments/envs/complex_hook_env.py |  4 +--
+ .../envs/push_database_controller.py          |  2 +-
+ 3 files changed, 16 insertions(+), 16 deletions(-)
+
+diff --git a/rpl_environments/rpl_environments/__init__.py b/rpl_environments/rpl_environments/__init__.py
+index 3a2dd34..4b96ab4 100644
+--- a/rpl_environments/rpl_environments/__init__.py
++++ b/rpl_environments/rpl_environments/__init__.py
+@@ -4,78 +4,78 @@ from gym.envs.registration import register
+ register(
+     id='ResidualFetchPickAndPlace-v0',
+     entry_point='rpl_environments.envs:ResidualFetchPickAndPlaceEnv',
+-    timestep_limit=50,
++    max_episode_steps=50,
+ )
+ 
+ register(
+     id='ResidualSlipperyPush-v0',
+     entry_point='rpl_environments.envs:ResidualSlipperyPushEnv',
+-    timestep_limit=50,
++    max_episode_steps=50,
+ )
+ 
+ register(
+     id='SlipperyPush-v0',
+     entry_point='rpl_environments.envs:SlipperyPushEnv',
+-    timestep_limit=50,
++    max_episode_steps=50,
+ )
+ 
+ register(
+     id='FetchHook-v0',
+     entry_point='rpl_environments.envs:FetchHookEnv',
+-    timestep_limit=100,
++    max_episode_steps=100,
+ )
+ 
+ register(
+     id='ResidualFetchHook-v0',
+     entry_point='rpl_environments.envs:ResidualFetchHookEnv',
+-    timestep_limit=100,
++    max_episode_steps=100,
+ )
+ 
+ register(
+     id='TwoFrameResidualHookNoisy-v0',
+     entry_point='rpl_environments.envs:TwoFrameResidualHookNoisyEnv',
+-    timestep_limit=100,
++    max_episode_steps=100,
+ )
+ 
+ register(
+     id='TwoFrameHookNoisy-v0',
+     entry_point='rpl_environments.envs:TwoFrameHookNoisyEnv',
+-    timestep_limit=100,
++    max_episode_steps=100,
+ )
+ 
+ register(
+     id='ResidualMPCPush-v0',
+     entry_point='rpl_environments.envs:ResidualMPCPushEnv',
+-    timestep_limit=50,
++    max_episode_steps=50,
+ )
+ 
+ register(
+     id='MPCPush-v0',
+     entry_point='rpl_environments.envs:MPCPushEnv',
+-    timestep_limit=50,
++    max_episode_steps=50,
+ )
+ 
+ register(
+     id='OtherPusherEnv-v0',
+     entry_point='rpl_environments.envs:PusherEnv',
+-    timestep_limit=150,
++    max_episode_steps=150,
+ )
+ 
+ register(
+     id='ResidualOtherPusherEnv-v0',
+     entry_point='rpl_environments.envs:ResidualPusherEnv',
+-    timestep_limit=150,
++    max_episode_steps=150,
+ )
+ 
+ register(
+     id='ComplexHook-v0',
+     entry_point='rpl_environments.envs:ComplexHookEnv',
+-    timestep_limit=100,
++    max_episode_steps=100,
+ )
+ 
+ register(
+     id='ResidualComplexHook-v0',
+     entry_point='rpl_environments.envs:ResidualComplexHookEnv',
+-    timestep_limit=100,
++    max_episode_steps=100,
+ )
+ 
+diff --git a/rpl_environments/rpl_environments/envs/complex_hook_env.py b/rpl_environments/rpl_environments/envs/complex_hook_env.py
+index 95e2642..842fb06 100644
+--- a/rpl_environments/rpl_environments/envs/complex_hook_env.py
++++ b/rpl_environments/rpl_environments/envs/complex_hook_env.py
+@@ -186,8 +186,8 @@ class ComplexHookEnv(gym.Env):
+                 else:
+                     print('subenv_type not recognized')
+                 self._subenvs.append(subenv)
+-            except:
+-                print("FAILED; skipping")
++            except Exception as e:
++                print("FAILED; skipping", e)
+ 
+         self._num_envs = len(self._subenvs)
+ 
+diff --git a/rpl_environments/rpl_environments/envs/push_database_controller.py b/rpl_environments/rpl_environments/envs/push_database_controller.py
+index 01b0dea..858b9ea 100644
+--- a/rpl_environments/rpl_environments/envs/push_database_controller.py
++++ b/rpl_environments/rpl_environments/envs/push_database_controller.py
+@@ -21,7 +21,7 @@ class DatabaseController(object):
+ 
+ def create_push_database_controller(scale_by_distance=False, scale_factor=1.):
+ 
+-    states, actions = np.load(database_file)
++    states, actions = np.load(database_file, allow_pickle=True)
+     states = np.array([list(s) for s in states])
+     kdtree = KDTree(states)
+ 
+-- 
+2.39.3

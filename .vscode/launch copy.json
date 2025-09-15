@@ -1,0 +1,27 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        
+        {
+            "name": "Py10",
+            "type": "debugpy",
+            "request": "launch",
+            // "python":"",
+            "program": "/home/joe/Work/RPL_new/residual-policy-learning/tensorflow/experiment/train_staged.py",
+            "console": "integratedTerminal",
+            "justMyCode":false,
+            "env": {
+                "PYTHONPATH": "/home/joe/Work/RPL_new/residual-policy-learning:$PYTHONPATH"
+            },
+            "args": [
+                "--env", "UR5ePickAndPlace-v1",
+                "--logdir", "/home/joe/Work/RPL_new/residual-policy-learning/tensorflow/experiment/logs/seed0/UR5ePickAndPlace-v1",
+                "--n_epochs", "100",
+                "--num_cpu", "10",
+                "--seed", "0",                          
+                "--config_path", "/home/joe/Work/RPL_new/residual-policy-learning/tensorflow/experiment/configs/pickandplace.json",
+
+            ]
+        }
+    ]
+}

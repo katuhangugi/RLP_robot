@@ -1,0 +1,28 @@
+[project]
+name = 'mpi4py'
+
+[tool.spin.commands]
+"Build" = [
+  ".spin/cmds.py:build",
+  ".spin/cmds.py:test",
+  ".spin/cmds.py:sdist",
+  ".spin/cmds.py:wheel",
+]
+"Check" = [
+  ".spin/cmds.py:lint",
+  ".spin/cmds.py:type",
+]
+"Environment" = [
+  ".spin/cmds.py:shell",
+  ".spin/cmds.py:ipython",
+  ".spin/cmds.py:mpiexec",
+  ".spin/cmds.py:mpi4py",
+]
+"Install" = [
+  ".spin/cmds.py:install",
+  ".spin/cmds.py:editable",
+]
+"Documentation" = [
+  ".spin/cmds.py:docs",
+  ".spin/cmds.py:browse",
+]

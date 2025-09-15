@@ -1,0 +1,968 @@
+From 1c4a86a82b5a5e03ed672544a62f3ae90529eca9 Mon Sep 17 00:00:00 2001
+From: trobr <trobr@xxx.com>
+Date: Tue, 22 Oct 2024 15:38:09 +0800
+Subject: [PATCH 3/3] =?UTF-8?q?=E8=AE=AD=E7=BB=83=E4=BF=AE=E6=94=B9?=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+---
+ tensorflow/experiment/configs/config.py       |  2 +-
+ tensorflow/experiment/configs/config_copy.py  |  2 +-
+ .../experiment/configs/config_expert_mix.py   |  2 +-
+ .../configs/config_expert_mix_hook.py         |  2 +-
+ .../configs/config_expert_mix_push.py         |  2 +-
+ tensorflow/experiment/configs/config_her.py   |  2 +-
+ tensorflow/experiment/configs/config_push.py  |  2 +-
+ .../configs/config_residual_base.py           |  2 +-
+ .../configs/config_standard_hook.py           |  2 +-
+ .../configs/config_standard_pickandplace.py   |  2 +-
+ .../configs/config_standard_push.py           |  2 +-
+ .../experiment/configs/config_two_frame.py    |  2 +-
+ tensorflow/experiment/ddpg_controller.py      | 96 ++++++++++++-------
+ .../ddpg_controller_residual_base.py          | 95 +++++++++++-------
+ .../experiment/models/actor_critic_avg.py     |  4 +-
+ .../models/actor_critic_combined.py           |  4 +-
+ .../models/actor_critic_copy_policy.py        |  6 +-
+ .../models/actor_critic_freeze_base.py        |  6 +-
+ .../models/actor_critic_last_zeros.py         |  4 +-
+ tensorflow/experiment/models/utils.py         | 22 ++---
+ tensorflow/experiment/train_residual_base.py  |  2 +-
+ tensorflow/experiment/train_staged.py         | 85 +++++++++-------
+ 22 files changed, 207 insertions(+), 141 deletions(-)
+
+diff --git a/tensorflow/experiment/configs/config.py b/tensorflow/experiment/configs/config.py
+index 5cf3e17..659e704 100644
+--- a/tensorflow/experiment/configs/config.py
++++ b/tensorflow/experiment/configs/config.py
+@@ -3,7 +3,7 @@ import gym
+ import rpl_environments
+ from baselines import logger
+ from baselines.her.ddpg import DDPG
+-from baselines.her.her import make_sample_her_transitions
++from baselines.her.her_sampler import make_sample_her_transitions
+ 
+ 
+ DEFAULT_ENV_PARAMS = {
+diff --git a/tensorflow/experiment/configs/config_copy.py b/tensorflow/experiment/configs/config_copy.py
+index 4757d7e..849d651 100644
+--- a/tensorflow/experiment/configs/config_copy.py
++++ b/tensorflow/experiment/configs/config_copy.py
+@@ -3,7 +3,7 @@ import gym
+ import rpl_environments
+ from baselines import logger
+ from baselines.her.ddpg import DDPG
+-from baselines.her.her import make_sample_her_transitions
++from baselines.her.her_sampler import make_sample_her_transitions
+ import pdb
+ 
+ DEFAULT_ENV_PARAMS = {
+diff --git a/tensorflow/experiment/configs/config_expert_mix.py b/tensorflow/experiment/configs/config_expert_mix.py
+index 2555f78..27277da 100644
+--- a/tensorflow/experiment/configs/config_expert_mix.py
++++ b/tensorflow/experiment/configs/config_expert_mix.py
+@@ -3,7 +3,7 @@ import gym
+ import rpl_environments
+ from baselines import logger
+ from ddpg_controller import DDPG
+-from baselines.her.her import make_sample_her_transitions
++from baselines.her.her_sampler import make_sample_her_transitions
+ import pdb
+ 
+ DEFAULT_ENV_PARAMS = {
+diff --git a/tensorflow/experiment/configs/config_expert_mix_hook.py b/tensorflow/experiment/configs/config_expert_mix_hook.py
+index 7387ee3..500ca47 100644
+--- a/tensorflow/experiment/configs/config_expert_mix_hook.py
++++ b/tensorflow/experiment/configs/config_expert_mix_hook.py
+@@ -3,7 +3,7 @@ import gym
+ import rpl_environments
+ from baselines import logger
+ from ddpg_controller import DDPG
+-from baselines.her.her import make_sample_her_transitions
++from baselines.her.her_sampler import make_sample_her_transitions
+ import pdb
+ 
+ DEFAULT_ENV_PARAMS = {
+diff --git a/tensorflow/experiment/configs/config_expert_mix_push.py b/tensorflow/experiment/configs/config_expert_mix_push.py
+index c037106..e384baa 100644
+--- a/tensorflow/experiment/configs/config_expert_mix_push.py
++++ b/tensorflow/experiment/configs/config_expert_mix_push.py
+@@ -3,7 +3,7 @@ import gym
+ import rpl_environments
+ from baselines import logger
+ from ddpg_controller import DDPG
+-from baselines.her.her import make_sample_her_transitions
++from baselines.her.her_sampler import make_sample_her_transitions
+ import pdb
+ 
+ DEFAULT_ENV_PARAMS = {
+diff --git a/tensorflow/experiment/configs/config_her.py b/tensorflow/experiment/configs/config_her.py
+index cf29ca5..14a74c2 100644
+--- a/tensorflow/experiment/configs/config_her.py
++++ b/tensorflow/experiment/configs/config_her.py
+@@ -3,7 +3,7 @@ import gym
+ 
+ from baselines import logger
+ from baselines.her.ddpg import DDPG
+-from baselines.her.her import make_sample_her_transitions
++from baselines.her.her_sampler import make_sample_her_transitions
+ 
+ 
+ DEFAULT_ENV_PARAMS = {
+diff --git a/tensorflow/experiment/configs/config_push.py b/tensorflow/experiment/configs/config_push.py
+index b62e9d7..45c6a12 100644
+--- a/tensorflow/experiment/configs/config_push.py
++++ b/tensorflow/experiment/configs/config_push.py
+@@ -3,7 +3,7 @@ import gym
+ import rpl_environments
+ from baselines import logger
+ from ddpg_controller import DDPG
+-from baselines.her.her import make_sample_her_transitions
++from baselines.her.her_sampler import make_sample_her_transitions
+ import pdb
+ 
+ DEFAULT_ENV_PARAMS = {
+diff --git a/tensorflow/experiment/configs/config_residual_base.py b/tensorflow/experiment/configs/config_residual_base.py
+index 254f595..34753ba 100644
+--- a/tensorflow/experiment/configs/config_residual_base.py
++++ b/tensorflow/experiment/configs/config_residual_base.py
+@@ -3,7 +3,7 @@ import gym
+ import rpl_environments
+ from baselines import logger
+ from ddpg_controller_residual_base import DDPG
+-from baselines.her.her import make_sample_her_transitions
++from baselines.her.her_sampler import make_sample_her_transitions
+ import pdb
+ 
+ DEFAULT_ENV_PARAMS = {
+diff --git a/tensorflow/experiment/configs/config_standard_hook.py b/tensorflow/experiment/configs/config_standard_hook.py
+index 905551f..d7860f6 100644
+--- a/tensorflow/experiment/configs/config_standard_hook.py
++++ b/tensorflow/experiment/configs/config_standard_hook.py
+@@ -3,7 +3,7 @@ import gym
+ import rpl_environments
+ from baselines import logger
+ from ddpg_controller import DDPG
+-from baselines.her.her import make_sample_her_transitions
++from baselines.her.her_sampler import make_sample_her_transitions
+ import pdb
+ 
+ DEFAULT_ENV_PARAMS = {
+diff --git a/tensorflow/experiment/configs/config_standard_pickandplace.py b/tensorflow/experiment/configs/config_standard_pickandplace.py
+index df622d4..4d9a008 100644
+--- a/tensorflow/experiment/configs/config_standard_pickandplace.py
++++ b/tensorflow/experiment/configs/config_standard_pickandplace.py
+@@ -3,7 +3,7 @@ import gym
+ import rpl_environments
+ from baselines import logger
+ from ddpg_controller import DDPG
+-from baselines.her.her import make_sample_her_transitions
++from baselines.her.her_sampler import make_sample_her_transitions
+ import pdb
+ 
+ DEFAULT_ENV_PARAMS = {
+diff --git a/tensorflow/experiment/configs/config_standard_push.py b/tensorflow/experiment/configs/config_standard_push.py
+index df622d4..4d9a008 100644
+--- a/tensorflow/experiment/configs/config_standard_push.py
++++ b/tensorflow/experiment/configs/config_standard_push.py
+@@ -3,7 +3,7 @@ import gym
+ import rpl_environments
+ from baselines import logger
+ from ddpg_controller import DDPG
+-from baselines.her.her import make_sample_her_transitions
++from baselines.her.her_sampler import make_sample_her_transitions
+ import pdb
+ 
+ DEFAULT_ENV_PARAMS = {
+diff --git a/tensorflow/experiment/configs/config_two_frame.py b/tensorflow/experiment/configs/config_two_frame.py
+index 4e1e199..01e3c1c 100644
+--- a/tensorflow/experiment/configs/config_two_frame.py
++++ b/tensorflow/experiment/configs/config_two_frame.py
+@@ -3,7 +3,7 @@ import gym
+ import rpl_environments
+ from baselines import logger
+ from baselines.her.ddpg import DDPG
+-from baselines.her.her import make_sample_her_transitions
++from baselines.her.her_sampler import make_sample_her_transitions
+ 
+ 
+ DEFAULT_ENV_PARAMS = {
+diff --git a/tensorflow/experiment/ddpg_controller.py b/tensorflow/experiment/ddpg_controller.py
+index 1ad084d..a8ee2f8 100644
+--- a/tensorflow/experiment/ddpg_controller.py
++++ b/tensorflow/experiment/ddpg_controller.py
+@@ -2,7 +2,7 @@ from collections import OrderedDict
+ 
+ import numpy as np
+ import tensorflow as tf
+-from tensorflow.contrib.staging import StagingArea
++from tensorflow.python.ops.data_flow_ops import StagingArea
+ import gym
+ 
+ from rpl_environments.envs.mpc_controller import MPCController
+@@ -16,13 +16,16 @@ from baselines.her.util import (
+     import_function, store_args, flatten_grads, transitions_in_episode_batch)
+ from baselines.her.normalizer import Normalizer
+ from baselines.her.replay_buffer import ReplayBuffer
+-from baselines.common.mpi_adam import MpiAdam
++from baselines.common.mpi_adam import MpiAdam, TfAdamOptimizer
+ import pdb
+ 
+ def dims_to_shapes(input_dims):
+     return {key: tuple([val]) if val > 0 else tuple() for key, val in input_dims.items()}
+ 
+ 
++GPU_OPTI = True
++
++
+ class DDPG(object):
+     @store_args
+     def __init__(self, input_dims, buffer_size, hidden, layers, network_class, polyak, batch_size,
+@@ -80,12 +83,12 @@ class DDPG(object):
+         self.stage_shapes = stage_shapes
+ 
+         # Create network.
+-        with tf.variable_scope(self.scope):
++        with tf.compat.v1.variable_scope(self.scope):
+             self.staging_tf = StagingArea(
+                 dtypes=[tf.float32 for _ in self.stage_shapes.keys()],
+                 shapes=list(self.stage_shapes.values()))
+             self.buffer_ph_tf = [
+-                tf.placeholder(tf.float32, shape=shape) for shape in self.stage_shapes.values()]
++                tf.compat.v1.placeholder(tf.float32, shape=shape) for shape in self.stage_shapes.values()]
+             self.stage_op = self.staging_tf.put(self.buffer_ph_tf)
+             if freeze:
+                 self._create_freeze_network(reuse=reuse)
+@@ -217,9 +220,9 @@ class DDPG(object):
+     def get_current_buffer_size(self):
+         return self.buffer.get_current_size()
+ 
+-    def _sync_optimizers(self):
+-        self.Q_adam.sync()
+-        self.pi_adam.sync()
++    # def _sync_optimizers(self):
++    #     self.Q_adam.sync()
++    #     self.pi_adam.sync()
+ 
+     def _grads(self):
+         #pdb.set_trace()
+@@ -252,13 +255,30 @@ class DDPG(object):
+         assert len(self.buffer_ph_tf) == len(batch)
+         self.sess.run(self.stage_op, feed_dict=dict(zip(self.buffer_ph_tf, batch)))
+ 
+-    def train(self, stage=True):
++
++    def train_old(self, stage=True):
+         if stage:
+             self.stage_batch()
+         critic_loss, actor_loss, Q_grad, pi_grad = self._grads()
+         self._update(Q_grad, pi_grad)
++        
++        # raise RuntimeError
+         return critic_loss, actor_loss
+ 
++    def train_gpu(self, stage=True):
++        if stage:
++            self.stage_batch()
++
++        critic_loss, actor_loss, *_ = self.sess.run([
++            self.Q_loss_tf, self.main.Q_pi_tf, self.pi_loss_tf, self.Q_op, self.pi_op])
++        return critic_loss, actor_loss
++
++    if GPU_OPTI:
++        train = train_gpu
++    else:
++        train = train_old
++
++
+     def _init_target_net(self):
+         self.sess.run(self.init_target_net_op)
+ 
+@@ -269,30 +289,30 @@ class DDPG(object):
+         self.buffer.clear_buffer()
+ 
+     def _vars(self, scope):
+-        res = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, scope=self.scope + '/' + scope)
++        res = tf.compat.v1.get_collection(tf.compat.v1.GraphKeys.TRAINABLE_VARIABLES, scope=self.scope + '/' + scope)
+         assert len(res) > 0
+         return res
+ 
+     def _global_vars(self, scope):
+-        res = tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope=self.scope + '/' + scope)
++        res = tf.compat.v1.get_collection(tf.compat.v1.GraphKeys.GLOBAL_VARIABLES, scope=self.scope + '/' + scope)
+         return res
+ 
+     def _create_network(self, reuse=False):
+         logger.info("Creating a DDPG agent with action space %d x %s..." % (self.dimu, self.max_u))
+ 
+-        self.sess = tf.get_default_session()
++        self.sess = tf.compat.v1.get_default_session()
+         if self.sess is None:
+-            self.sess = tf.InteractiveSession()
++            self.sess = tf.compat.v1.InteractiveSession()
+ 
+         # running averages
+-        with tf.variable_scope('o_stats') as vs:
++        with tf.compat.v1.variable_scope('o_stats') as vs:
+             if reuse:
+                 vs.reuse_variables()
+-            self.o_stats = Normalizer(self.dimo, self.norm_eps, self.norm_clip, sess=self.sess)
+-        with tf.variable_scope('g_stats') as vs:
++            self.o_stats = Normalizer(self.dimo, self.norm_eps, self.norm_clip, self.sess)
++        with tf.compat.v1.variable_scope('g_stats') as vs:
+             if reuse:
+                 vs.reuse_variables()
+-            self.g_stats = Normalizer(self.dimg, self.norm_eps, self.norm_clip, sess=self.sess)
++            self.g_stats = Normalizer(self.dimg, self.norm_eps, self.norm_clip, self.sess)
+ 
+         # mini-batch sampling.
+         batch = self.staging_tf.get()
+@@ -301,12 +321,12 @@ class DDPG(object):
+         batch_tf['r'] = tf.reshape(batch_tf['r'], [-1, 1])
+ 
+         # networks
+-        with tf.variable_scope('main') as vs:
++        with tf.compat.v1.variable_scope('main') as vs:
+             if reuse:
+                 vs.reuse_variables()
+             self.main = self.create_actor_critic(batch_tf, net_type='main', **self.__dict__)
+             vs.reuse_variables()
+-        with tf.variable_scope('target') as vs:
++        with tf.compat.v1.variable_scope('target') as vs:
+             if reuse:
+                 vs.reuse_variables()
+             target_batch_tf = batch_tf.copy()
+@@ -324,18 +344,28 @@ class DDPG(object):
+         self.Q_loss_tf = tf.reduce_mean(tf.square(tf.stop_gradient(target_tf) - self.main.Q_tf))
+         self.pi_loss_tf = -tf.reduce_mean(self.main.Q_pi_tf)
+         self.pi_loss_tf += self.action_l2 * tf.reduce_mean(tf.square(self.main.pi_tf / self.max_u))
+-        Q_grads_tf = tf.gradients(self.Q_loss_tf, self._vars('main/Q'))
+-        pi_grads_tf = tf.gradients(self.pi_loss_tf, self._vars('main/pi'))
+-        assert len(self._vars('main/Q')) == len(Q_grads_tf)
+-        assert len(self._vars('main/pi')) == len(pi_grads_tf)
+-        self.Q_grads_vars_tf = zip(Q_grads_tf, self._vars('main/Q'))
+-        self.pi_grads_vars_tf = zip(pi_grads_tf, self._vars('main/pi'))
+-        self.Q_grad_tf = flatten_grads(grads=Q_grads_tf, var_list=self._vars('main/Q'))
+-        self.pi_grad_tf = flatten_grads(grads=pi_grads_tf, var_list=self._vars('main/pi'))
+-
+-        # optimizers
+-        self.Q_adam = MpiAdam(self._vars('main/Q'), scale_grad_by_procs=False)
+-        self.pi_adam = MpiAdam(self._vars('main/pi'), scale_grad_by_procs=False)
++
++        if GPU_OPTI:
++            # self.Q_adam = TfAdamOptimizer(self.Q_lr)
++            # self.pi_adam = TfAdamOptimizer(self.pi_lr)
++            self.Q_adam = tf.compat.v1.train.AdamOptimizer(self.Q_lr)
++            self.pi_adam = tf.compat.v1.train.AdamOptimizer(self.pi_lr)
++            
++
++            self.Q_op = self.Q_adam.minimize(self.Q_loss_tf, var_list=self._vars('main/Q'))
++            self.pi_op = self.pi_adam.minimize(self.pi_loss_tf, var_list=self._vars('main/pi'))
++        else:
++            Q_grads_tf = tf.gradients(self.Q_loss_tf, self._vars('main/Q'))
++            pi_grads_tf = tf.gradients(self.pi_loss_tf, self._vars('main/pi'))
++            assert len(self._vars('main/Q')) == len(Q_grads_tf)
++            assert len(self._vars('main/pi')) == len(pi_grads_tf)
++            self.Q_grads_vars_tf = zip(Q_grads_tf, self._vars('main/Q'))
++            self.pi_grads_vars_tf = zip(pi_grads_tf, self._vars('main/pi'))
++            self.Q_grad_tf = flatten_grads(grads=Q_grads_tf, var_list=self._vars('main/Q'))
++            self.pi_grad_tf = flatten_grads(grads=pi_grads_tf, var_list=self._vars('main/pi'))
++            # optimizers
++            self.Q_adam = MpiAdam(self._vars('main/Q'), scale_grad_by_procs=False)
++            self.pi_adam = MpiAdam(self._vars('main/pi'), scale_grad_by_procs=False)
+ 
+         # polyak averaging
+         self.main_vars = self._vars('main/Q') + self._vars('main/pi')
+@@ -347,8 +377,8 @@ class DDPG(object):
+             map(lambda v: v[0].assign(self.polyak * v[0] + (1. - self.polyak) * v[1]), zip(self.target_vars, self.main_vars)))
+ 
+         # initialize all variables
+-        tf.variables_initializer(self._global_vars('')).run()
+-        self._sync_optimizers()
++        tf.compat.v1.variables_initializer(self._global_vars('')).run()
++        # self._sync_optimizers()
+         self._init_target_net()
+ 
+     def logs(self, prefix=''):
+@@ -388,5 +418,5 @@ class DDPG(object):
+         # load TF variables
+         vars = [x for x in self._global_vars('') if 'buffer' not in x.name]
+         assert(len(vars) == len(state["tf"]))
+-        node = [tf.assign(var, val) for var, val in zip(vars, state["tf"])]
++        node = [tf.compat.v1.assign(var, val) for var, val in zip(vars, state["tf"])]
+         self.sess.run(node)
+diff --git a/tensorflow/experiment/ddpg_controller_residual_base.py b/tensorflow/experiment/ddpg_controller_residual_base.py
+index d9160e8..4faabda 100644
+--- a/tensorflow/experiment/ddpg_controller_residual_base.py
++++ b/tensorflow/experiment/ddpg_controller_residual_base.py
+@@ -2,7 +2,7 @@ from collections import OrderedDict
+ 
+ import numpy as np
+ import tensorflow as tf
+-from tensorflow.contrib.staging import StagingArea
++from tensorflow.python.ops.data_flow_ops import StagingArea
+ 
+ from gym_residual_fetch.envs.miscalibrated_push_controller import get_push_control
+ from gym_residual_fetch.envs.oscillating_pick_and_place_controller import get_pick_and_place_control
+@@ -15,13 +15,16 @@ from baselines.her.util import (
+     import_function, store_args, flatten_grads, transitions_in_episode_batch)
+ from baselines.her.normalizer import Normalizer
+ from baselines.her.replay_buffer import ReplayBuffer
+-from baselines.common.mpi_adam import MpiAdam
++from baselines.common.mpi_adam import MpiAdam, TfAdamOptimizer
+ import pdb
+ 
+ def dims_to_shapes(input_dims):
+     return {key: tuple([val]) if val > 0 else tuple() for key, val in input_dims.items()}
+ 
+ 
++GPU_OPTI = True
++
++
+ class DDPG(object):
+     @store_args
+     def __init__(self, input_dims, buffer_size, hidden, layers, network_class, polyak, batch_size,
+@@ -79,12 +82,12 @@ class DDPG(object):
+         self.stage_shapes = stage_shapes
+ 
+         # Create network.
+-        with tf.variable_scope(self.scope):
++        with tf.compat.v1.variable_scope(self.scope):
+             self.staging_tf = StagingArea(
+                 dtypes=[tf.float32 for _ in self.stage_shapes.keys()],
+                 shapes=list(self.stage_shapes.values()))
+             self.buffer_ph_tf = [
+-                tf.placeholder(tf.float32, shape=shape) for shape in self.stage_shapes.values()]
++                tf.compat.v1.placeholder(tf.float32, shape=shape) for shape in self.stage_shapes.values()]
+             self.stage_op = self.staging_tf.put(self.buffer_ph_tf)
+             self._create_network(reuse=reuse)
+ 
+@@ -194,10 +197,10 @@ class DDPG(object):
+     def get_current_buffer_size(self):
+         return self.buffer.get_current_size()
+ 
+-    def _sync_optimizers(self):
+-        self.Q_adam.sync()
+-        self.pi_adam_r.sync()
+-        self.pi_adam_b.sync()
++    # def _sync_optimizers(self):
++    #     self.Q_adam.sync()
++    #     self.pi_adam_r.sync()
++    #     self.pi_adam_b.sync()
+ 
+     def _grads(self):
+         # Avoid feed_dict here for performance!
+@@ -234,13 +237,22 @@ class DDPG(object):
+         assert len(self.buffer_ph_tf) == len(batch)
+         self.sess.run(self.stage_op, feed_dict=dict(zip(self.buffer_ph_tf, batch)))
+ 
+-    def train(self, stage=True, base=True, residual=True):
++    def train_old(self, stage=True, base=True, residual=True):
+         if stage:
+             self.stage_batch()
+         critic_loss, actor_loss, Q_grad, pi_grad_r, pi_grad_b = self._grads()
+         self._update(Q_grad, pi_grad_r, pi_grad_b, base, residual)
+         return critic_loss, actor_loss
+ 
++    def train_gpu(self, stage=True, base=True, residual=True):
++        if stage:
++            self.stage_batch()
++
++        critic_loss, actor_loss, *_ = self.sess.run([
++            self.Q_loss_tf, self.main.Q_pi_tf, self.pi_loss_tf, self.Q_op, self.pi_r_op, self.pi_b_op])
++        return critic_loss, actor_loss
++        
++
+     def _init_target_net(self, base=True, residual=True):
+         self.sess.run(self.init_target_net_op)
+ 
+@@ -255,12 +267,12 @@ class DDPG(object):
+         self.buffer.clear_buffer()
+ 
+     def _vars(self, scope):
+-        res = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, scope=self.scope + '/' + scope)
++        res = tf.compat.v1.get_collection(tf.compat.v1.GraphKeys.TRAINABLE_VARIABLES, scope=self.scope + '/' + scope)
+         assert len(res) > 0
+         return res
+ 
+     def _global_vars(self, scope):
+-        res = tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope=self.scope + '/' + scope)
++        res = tf.compat.v1.get_collection(tf.compat.v1.GraphKeys.GLOBAL_VARIABLES, scope=self.scope + '/' + scope)
+         return res
+ 
+     def logs(self, prefix=''):
+@@ -300,22 +312,22 @@ class DDPG(object):
+         # load TF variables
+         vars = [x for x in self._global_vars('') if 'buffer' not in x.name]
+         assert(len(vars) == len(state["tf"]))
+-        node = [tf.assign(var, val) for var, val in zip(vars, state["tf"])]
++        node = [tf.compat.v1.assign(var, val) for var, val in zip(vars, state["tf"])]
+         self.sess.run(node)
+ 
+     def _create_network(self, reuse=False):
+         logger.info("Creating a DDPG agent with action space %d x %s..." % (self.dimu, self.max_u))
+ 
+-        self.sess = tf.get_default_session()
++        self.sess = tf.compat.v1.get_default_session()
+         if self.sess is None:
+-            self.sess = tf.InteractiveSession()
++            self.sess = tf.compat.v1.InteractiveSession()
+ 
+         # running averages
+-        with tf.variable_scope('o_stats') as vs:
++        with tf.compat.v1.variable_scope('o_stats') as vs:
+             if reuse:
+                 vs.reuse_variables()
+             self.o_stats = Normalizer(self.dimo, self.norm_eps, self.norm_clip, sess=self.sess)
+-        with tf.variable_scope('g_stats') as vs:
++        with tf.compat.v1.variable_scope('g_stats') as vs:
+             if reuse:
+                 vs.reuse_variables()
+             self.g_stats = Normalizer(self.dimg, self.norm_eps, self.norm_clip, sess=self.sess)
+@@ -327,12 +339,12 @@ class DDPG(object):
+         batch_tf['r'] = tf.reshape(batch_tf['r'], [-1, 1])
+ 
+         # networks
+-        with tf.variable_scope('main') as vs:
++        with tf.compat.v1.variable_scope('main') as vs:
+             if reuse:
+                 vs.reuse_variables()
+             self.main = self.create_actor_critic(batch_tf, net_type='main', **self.__dict__)
+             vs.reuse_variables()
+-        with tf.variable_scope('target') as vs:
++        with tf.compat.v1.variable_scope('target') as vs:
+             if reuse:
+                 vs.reuse_variables()
+             target_batch_tf = batch_tf.copy()
+@@ -350,28 +362,37 @@ class DDPG(object):
+         self.Q_loss_tf = tf.reduce_mean(tf.square(tf.stop_gradient(target_tf) - self.main.Q_tf))
+         self.pi_loss_tf = -tf.reduce_mean(self.main.Q_pi_tf)
+         self.pi_loss_tf += self.action_l2 * tf.reduce_mean(tf.square(self.main.pi_tf / self.max_u))
+-        Q_grads_tf = tf.gradients(self.Q_loss_tf, self._vars('main/Q'))
+-        
+-        pi_grads_tf_r = tf.gradients(self.pi_loss_tf, self._vars('main/r_pi'))
+-        pi_grads_tf_b = tf.gradients(self.pi_loss_tf, self._vars('main/b_pi'))
+ 
+-        assert len(self._vars('main/Q')) == len(Q_grads_tf)
+-        assert len(self._vars('main/b_pi')) == len(pi_grads_tf_b)
+-        assert len(self._vars('main/r_pi')) == len(pi_grads_tf_r)
++        if GPU_OPTI:
++            self.Q_adam = tf.compat.v1.train.AdamOptimizer(self.Q_lr)
++            self.pi_adam_r = tf.compat.v1.train.AdamOptimizer(self.pi_lr_r)
++            self.pi_adam_b = tf.compat.v1.train.AdamOptimizer(self.pi_lr_b)
++
++            self.Q_op = self.Q_adam.minimize(self.Q_loss_tf, var_list=self._vars('main/Q'))
++            self.pi_r_op = self.pi_adam_r.minimize(self.pi_loss_tf, var_list=self._vars('main/r_pi'))
++            self.pi_b_op = self.pi_adam_b.minimize(self.pi_loss_tf, var_list=self._vars('main/b_pi'))
++        else:
++            Q_grads_tf = tf.gradients(self.Q_loss_tf, self._vars('main/Q'))
++            pi_grads_tf_r = tf.gradients(self.pi_loss_tf, self._vars('main/r_pi'))
++            pi_grads_tf_b = tf.gradients(self.pi_loss_tf, self._vars('main/b_pi'))
+ 
+-        self.Q_grads_vars_tf = zip(Q_grads_tf, self._vars('main/Q'))
++            assert len(self._vars('main/Q')) == len(Q_grads_tf)
++            assert len(self._vars('main/b_pi')) == len(pi_grads_tf_b)
++            assert len(self._vars('main/r_pi')) == len(pi_grads_tf_r)
+ 
+-        self.pi_grads_vars_tf_b = zip(pi_grads_tf_b, self._vars('main/b_pi'))
+-        self.pi_grads_vars_tf_r = zip(pi_grads_tf_r, self._vars('main/r_pi'))
+-        
+-        self.Q_grad_tf = flatten_grads(grads=Q_grads_tf, var_list=self._vars('main/Q'))
++            self.Q_grads_vars_tf = zip(Q_grads_tf, self._vars('main/Q'))
++
++            self.pi_grads_vars_tf_b = zip(pi_grads_tf_b, self._vars('main/b_pi'))
++            self.pi_grads_vars_tf_r = zip(pi_grads_tf_r, self._vars('main/r_pi'))
++            
++            self.Q_grad_tf = flatten_grads(grads=Q_grads_tf, var_list=self._vars('main/Q'))
+ 
+-        self.pi_grad_tf_r = flatten_grads(grads=pi_grads_tf_r, var_list=self._vars('main/r_pi'))
+-        self.pi_grad_tf_b = flatten_grads(grads=pi_grads_tf_b, var_list=self._vars('main/b_pi'))
+-        # optimizers
+-        self.Q_adam = MpiAdam(self._vars('main/Q'), scale_grad_by_procs=False)
+-        self.pi_adam_r = MpiAdam(self._vars('main/r_pi'), scale_grad_by_procs=False)
+-        self.pi_adam_b = MpiAdam(self._vars('main/b_pi'), scale_grad_by_procs=False)
++            self.pi_grad_tf_r = flatten_grads(grads=pi_grads_tf_r, var_list=self._vars('main/r_pi'))
++            self.pi_grad_tf_b = flatten_grads(grads=pi_grads_tf_b, var_list=self._vars('main/b_pi'))
++            # optimizers
++            self.Q_adam = MpiAdam(self._vars('main/Q'), scale_grad_by_procs=False)
++            self.pi_adam_r = MpiAdam(self._vars('main/r_pi'), scale_grad_by_procs=False)
++            self.pi_adam_b = MpiAdam(self._vars('main/b_pi'), scale_grad_by_procs=False)
+ 
+         # polyak averaging
+         self.main_vars = self._vars('main/Q')# + self._vars('main/r_pi') + self._vars('main/b_pi')
+@@ -397,6 +418,6 @@ class DDPG(object):
+             map(lambda v: v[0].assign(self.polyak * v[0] + (1. - self.polyak) * v[1]), zip(self.target_vars_b, self.main_vars_b)))
+ 
+         # initialize all variables
+-        tf.variables_initializer(self._global_vars('')).run()
++        tf.compat.v1.variables_initializer(self._global_vars('')).run()
+         self._sync_optimizers()
+         self._init_target_net()
+\ No newline at end of file
+diff --git a/tensorflow/experiment/models/actor_critic_avg.py b/tensorflow/experiment/models/actor_critic_avg.py
+index cc11f32..7262c2d 100644
+--- a/tensorflow/experiment/models/actor_critic_avg.py
++++ b/tensorflow/experiment/models/actor_critic_avg.py
+@@ -36,14 +36,14 @@ class ActorCritic:
+         input0 = tf.concat(axis=1, values=[o0,g])
+         input1 = tf.concat(axis=1, values=[o1,g])
+ 
+-        with tf.variable_scope('pi'):
++        with tf.compat.v1.variable_scope('pi'):
+ 
+             pi_tf0 = nn_last_zero(input0, [self.hidden] * self.layers + [self.dimu], seed_offset=0)
+             pi_tf1 = nn_last_zero(input1, [self.hidden] * self.layers + [self.dimu], reuse=True, seed_offset=0)
+             pi_tf = 0.5*(pi_tf0 + pi_tf1)
+             self.pi_tf = self.max_u * tf.tanh(pi_tf)
+ 
+-        with tf.variable_scope('Q'):
++        with tf.compat.v1.variable_scope('Q'):
+             # for policy training
+             input_Q0 = tf.concat(axis=1, values=[o0, g, self.pi_tf / self.max_u])
+             input_Q1 = tf.concat(axis=1, values=[o1, g, self.pi_tf / self.max_u])
+diff --git a/tensorflow/experiment/models/actor_critic_combined.py b/tensorflow/experiment/models/actor_critic_combined.py
+index 0652a09..6bfe0a3 100644
+--- a/tensorflow/experiment/models/actor_critic_combined.py
++++ b/tensorflow/experiment/models/actor_critic_combined.py
+@@ -31,7 +31,7 @@ class ActorCritic:
+         g = self.g_stats.normalize(self.g_tf)
+         input_pi = tf.concat(axis=1, values=[o, g])  # for actor
+ 
+-        with tf.variable_scope('pi'):
++        with tf.compat.v1.variable_scope('pi'):
+ 
+             pi_tf = nn_last_zero(input_pi, [self.hidden] * self.layers + [self.dimu], name='residual',seed_offset=0)
+             self.pi_tf_r = self.max_u * tf.tanh(pi_tf)
+@@ -41,7 +41,7 @@ class ActorCritic:
+ 
+             self.pi_tf = self.pi_tf_r+self.pi_tf_b
+ 
+-        with tf.variable_scope('Q'):
++        with tf.compat.v1.variable_scope('Q'):
+             # for policy training
+             input_Q = tf.concat(axis=1, values=[o, g, self.pi_tf / self.max_u])
+             self.Q_pi_tf = nn(input_Q, [self.hidden] * self.layers + [1])
+diff --git a/tensorflow/experiment/models/actor_critic_copy_policy.py b/tensorflow/experiment/models/actor_critic_copy_policy.py
+index 4ffb26f..05604e3 100644
+--- a/tensorflow/experiment/models/actor_critic_copy_policy.py
++++ b/tensorflow/experiment/models/actor_critic_copy_policy.py
+@@ -32,17 +32,17 @@ class ActorCritic:
+         input_pi = tf.concat(axis=1, values=[o, g])  # for actor
+ 
+         # Networks.
+-        with tf.variable_scope('pi_copy'):
++        with tf.compat.v1.variable_scope('pi_copy'):
+             pi_tf_copy = nn(input_pi, [self.hidden] * self.layers + [self.dimu], use_seed=True)
+             tf.stop_gradient(pi_tf_copy)
+         
+-        with tf.variable_scope('pi'):
++        with tf.compat.v1.variable_scope('pi'):
+ 
+             pi_tf = nn(input_pi, [self.hidden] * self.layers + [self.dimu], use_seed=True)
+             self.pi_tf = self.max_u * tf.tanh((pi_tf - pi_tf_copy))
+ 
+ 
+-        with tf.variable_scope('Q'):
++        with tf.compat.v1.variable_scope('Q'):
+             # for policy training
+             input_Q = tf.concat(axis=1, values=[o, g, self.pi_tf / self.max_u])
+             self.Q_pi_tf = nn(input_Q, [self.hidden] * self.layers + [1])
+diff --git a/tensorflow/experiment/models/actor_critic_freeze_base.py b/tensorflow/experiment/models/actor_critic_freeze_base.py
+index d9a51be..d8512e8 100644
+--- a/tensorflow/experiment/models/actor_critic_freeze_base.py
++++ b/tensorflow/experiment/models/actor_critic_freeze_base.py
+@@ -34,13 +34,13 @@ class ActorCritic:
+         g = self.g_stats.normalize(self.g_tf)
+         input_pi = tf.concat(axis=1, values=[o, g])  # for actor
+ 
+-        with tf.variable_scope('r_pi'):
++        with tf.compat.v1.variable_scope('r_pi'):
+             pi_tf_r = nn_last_zero(input_pi, [self.hidden] * self.layers + [self.dimu])
+             self.pi_tf_r = self.max_u * tf.tanh(pi_tf_r)
+             if self.base_only:
+                 tf.stop_gradient(self.pi_tf_r)
+ 
+-        with tf.variable_scope('b_pi'):
++        with tf.compat.v1.variable_scope('b_pi'):
+ 
+             pi_tf_b = nn(input_pi, [self.hidden] * self.layers + [self.dimu])
+             self.pi_tf_b = self.max_u * tf.tanh(pi_tf_b)
+@@ -49,7 +49,7 @@ class ActorCritic:
+ 
+         self.pi_tf = self.pi_tf_b + self.pi_tf_r
+ 
+-        with tf.variable_scope('Q'):
++        with tf.compat.v1.variable_scope('Q'):
+             # for policy training
+             input_Q = tf.concat(axis=1, values=[o, g, self.pi_tf / self.max_u])
+             self.Q_pi_tf = nn(input_Q, [self.hidden] * self.layers + [1])
+diff --git a/tensorflow/experiment/models/actor_critic_last_zeros.py b/tensorflow/experiment/models/actor_critic_last_zeros.py
+index facdc09..c0ee8ec 100644
+--- a/tensorflow/experiment/models/actor_critic_last_zeros.py
++++ b/tensorflow/experiment/models/actor_critic_last_zeros.py
+@@ -31,12 +31,12 @@ class ActorCritic:
+         g = self.g_stats.normalize(self.g_tf)
+         input_pi = tf.concat(axis=1, values=[o, g])  # for actor
+ 
+-        with tf.variable_scope('pi'):
++        with tf.compat.v1.variable_scope('pi'):
+ 
+             pi_tf = nn_last_zero(input_pi, [self.hidden] * self.layers + [self.dimu], seed_offset=0)
+             self.pi_tf = self.max_u * tf.tanh(pi_tf)
+ 
+-        with tf.variable_scope('Q'):
++        with tf.compat.v1.variable_scope('Q'):
+             # for policy training
+             input_Q = tf.concat(axis=1, values=[o, g, self.pi_tf / self.max_u])
+             self.Q_pi_tf = nn(input_Q, [self.hidden] * self.layers + [1])
+diff --git a/tensorflow/experiment/models/utils.py b/tensorflow/experiment/models/utils.py
+index cf3baa8..efdabdd 100644
+--- a/tensorflow/experiment/models/utils.py
++++ b/tensorflow/experiment/models/utils.py
+@@ -9,10 +9,10 @@ def nn(input, layers_sizes, reuse=None, flatten=False, name="", use_seed=False,
+         if init_zero:
+             kernel_init = 'zeros'
+         elif use_seed:
+-            kernel_init = tf.contrib.layers.xavier_initializer(seed=i+seed_offset)
++            kernel_init = tf.compat.v1.keras.initializers.VarianceScaling(scale=1.0, mode="fan_avg", distribution="uniform", seed=i+seed_offset)
+         else:
+-            kernel_init = tf.contrib.layers.xavier_initializer()
+-        input = tf.layers.dense(inputs=input,
++            kernel_init = tf.compat.v1.keras.initializers.VarianceScaling(scale=1.0, mode="fan_avg", distribution="uniform")
++        input = tf.compat.v1.layers.dense(inputs=input,
+                                 units=size,
+                                 kernel_initializer=kernel_init,
+                                 reuse=reuse,
+@@ -32,9 +32,9 @@ def nn_last_zero(input, layers_sizes, reuse=None, flatten=False, name="", seed_o
+         if i == len(layers_sizes) - 1:
+             initializer = 'zeros'
+         else:
+-            initializer = tf.contrib.layers.xavier_initializer(seed=i+seed_offset)
++            initializer = tf.compat.v1.keras.initializers.VarianceScaling(scale=1.0, mode="fan_avg", distribution="uniform", seed=i+seed_offset)
+ 
+-        input = tf.layers.dense(inputs=input,
++        input = tf.compat.v1.layers.dense(inputs=input,
+                                 units=size,
+                                 kernel_initializer=initializer,
+                                 reuse=reuse,
+@@ -52,9 +52,9 @@ def nn_controller(controller_x, input, layers_sizes, dimu, max_u, reuse=None, fl
+     """
+     for i, size in enumerate(layers_sizes):
+         activation = tf.nn.relu if i < len(layers_sizes) - 1 else None
+-        input = tf.layers.dense(inputs=input,
++        input = tf.compat.v1.layers.dense(inputs=input,
+                                 units=size,
+-                                kernel_initializer=tf.contrib.layers.xavier_initializer(),
++                                kernel_initializer=tf.compat.v1.keras.initializers.VarianceScaling(scale=1.0, mode="fan_avg", distribution="uniform"),
+                                 reuse=reuse,
+                                 name=name + '_' + str(i))
+         if activation:
+@@ -63,9 +63,9 @@ def nn_controller(controller_x, input, layers_sizes, dimu, max_u, reuse=None, fl
+         assert layers_sizes[-1] == 1
+         input = tf.reshape(input, [-1])
+ 
+-    input = tf.layers.dense(inputs=tf.concat(axis=1, values=[controller_x, max_u * tf.tanh(input)]),
++    input = tf.compat.v1.layers.dense(inputs=tf.concat(axis=1, values=[controller_x, max_u * tf.tanh(input)]),
+                             units=dimu,
+-                            kernel_initializer=tf.contrib.layers.xavier_initializer(),
++                            kernel_initializer=tf.compat.v1.keras.initializers.VarianceScaling(scale=1.0, mode="fan_avg", distribution="uniform"),
+                             reuse=reuse,
+                             name=name+'_linear')
+     return input
+@@ -75,9 +75,9 @@ def nn_linear(input, layers_sizes, reuse=None, flatten=False, name=""):
+     """
+     for i, size in enumerate(layers_sizes):
+         activation = tf.nn.relu if i < len(layers_sizes) - 1 else None
+-        input = tf.layers.dense(inputs=input,
++        input = tf.compat.v1.layers.dense(inputs=input,
+                                 units=size,
+-                                kernel_initializer=tf.contrib.layers.xavier_initializer(),
++                                kernel_initializer=tf.compat.v1.keras.initializers.VarianceScaling(scale=1.0, mode="fan_avg", distribution="uniform"),
+                                 reuse=reuse,
+                                 name=name + '_' + str(i))
+         if activation:
+diff --git a/tensorflow/experiment/train_residual_base.py b/tensorflow/experiment/train_residual_base.py
+index e58a1c0..82bf9f4 100644
+--- a/tensorflow/experiment/train_residual_base.py
++++ b/tensorflow/experiment/train_residual_base.py
+@@ -22,7 +22,7 @@ from collections import OrderedDict
+ 
+ import numpy as np
+ import tensorflow as tf
+-from tensorflow.contrib.staging import StagingArea
++from tensorflow.python.ops.data_flow_ops import StagingArea
+ from baselines.her.util import (
+     import_function, store_args, flatten_grads, transitions_in_episode_batch)
+ from baselines.common.mpi_adam import MpiAdam
+diff --git a/tensorflow/experiment/train_staged.py b/tensorflow/experiment/train_staged.py
+index b13700d..21bfe91 100644
+--- a/tensorflow/experiment/train_staged.py
++++ b/tensorflow/experiment/train_staged.py
+@@ -1,6 +1,10 @@
+ import os
+ import sys
+ 
++import tensorflow as tf
++tf.compat.v1.disable_eager_execution()
++
++
+ import click
+ import numpy as np
+ import json
+@@ -15,17 +19,17 @@ from rollout_controller import RolloutWorker
+ 
+ from baselines.her.util import mpi_fork
+ import pickle as pkl
+-import tensorflow as tf
+ import pdb
+ from subprocess import CalledProcessError
+ from collections import OrderedDict
+ 
+ import numpy as np
+ import tensorflow as tf
+-from tensorflow.contrib.staging import StagingArea
++from tensorflow.python.ops.data_flow_ops import StagingArea
+ from baselines.her.util import (
+     import_function, store_args, flatten_grads, transitions_in_episode_batch)
+-from baselines.common.mpi_adam import MpiAdam
++
++
+ def mpi_average(value):
+     if value == []:
+         value = [0.]
+@@ -45,7 +49,7 @@ def broadcast_coinflip(comm, rank, policy, policy_pi_lr ):
+ def train(policy, rollout_worker, evaluator,
+           n_epochs, n_test_rollouts, n_cycles, n_batches, policy_save_interval,
+           save_policies, skip_training, **kwargs):
+-    rank = MPI.COMM_WORLD.Get_rank()
++    # rank = MPI.COMM_WORLD.Get_rank()
+ 
+     latest_policy_path = os.path.join(logger.get_dir(), 'policy_latest.pkl')
+     best_policy_path = os.path.join(logger.get_dir(), 'policy_best.pkl')
+@@ -72,7 +76,7 @@ def train(policy, rollout_worker, evaluator,
+             policy_pi_lr = original_pi_lr
+             coin_flipping = False
+ 
+-        broadcast_coinflip(MPI.COMM_WORLD, rank, policy, policy_pi_lr)
++        # broadcast_coinflip(MPI.COMM_WORLD, rank, policy, policy_pi_lr)
+ 
+         prev_losses = losses
+ 
+@@ -90,7 +94,7 @@ def train(policy, rollout_worker, evaluator,
+                         rollout_worker.random_eps = 0.0
+                         rollout_worker.noise_eps = 0.0
+                 episode = rollout_worker.generate_rollouts()
+- 
++
+                 policy.store_episode(episode)
+                 for _ in range(n_batches):
+                     critic_loss, actor_loss = policy.train()
+@@ -106,23 +110,30 @@ def train(policy, rollout_worker, evaluator,
+         # record logs
+         logger.record_tabular('epoch', epoch)
+         for key, val in evaluator.logs('test'):
+-            logger.record_tabular(key, mpi_average(val))
++            # logger.record_tabular(key, mpi_average(val))
++            logger.record_tabular(key, val)
+         for key, val in rollout_worker.logs('train'):
+-            logger.record_tabular(key, mpi_average(val))
++            # logger.record_tabular(key, mpi_average(val))
++            logger.record_tabular(key, val)
+         for key, val in policy.logs():
+-            logger.record_tabular(key, mpi_average(val))
++            # logger.record_tabular(key, mpi_average(val))
++            logger.record_tabular(key, val)
+ 
+-        if rank == 0:
+-            logger.dump_tabular()
++        # if rank == 0:
++        #     logger.dump_tabular()
++        logger.dump_tabular()
+ 
+         # save the policy if it's better than the previous ones
+-        success_rate = mpi_average(evaluator.current_success_rate())
+-        if rank == 0 and success_rate >= best_success_rate and save_policies:
++        # success_rate = mpi_average(evaluator.current_success_rate())
++        success_rate = evaluator.current_success_rate()
++        # if rank == 0 and success_rate >= best_success_rate and save_policies:
++        if success_rate >= best_success_rate and save_policies:
+             best_success_rate = success_rate
+             logger.info('New best success rate: {}. Saving policy to {} ...'.format(best_success_rate, best_policy_path))
+             evaluator.save_policy(best_policy_path)
+             evaluator.save_policy(latest_policy_path)
+-        if rank == 0 and policy_save_interval > 0 and epoch % policy_save_interval == 0 and save_policies:
++        # if rank == 0 and policy_save_interval > 0 and epoch % policy_save_interval == 0 and save_policies:
++        if policy_save_interval > 0 and epoch % policy_save_interval == 0 and save_policies:
+             policy_path = periodic_policy_path.format(epoch)
+             logger.info('Saving periodic policy to {} ...'.format(policy_path))
+             evaluator.save_policy(policy_path)
+@@ -130,9 +141,10 @@ def train(policy, rollout_worker, evaluator,
+         # make sure that different threads have different seeds
+         local_uniform = np.random.uniform(size=(1,))
+         root_uniform = local_uniform.copy()
+-        MPI.COMM_WORLD.Bcast(root_uniform, root=0)
+-        if rank != 0:
+-            assert local_uniform[0] != root_uniform[0]
++        # MPI.COMM_WORLD.Bcast(root_uniform, root=0)
++        # if rank != 0:
++        #     assert local_uniform[0] != root_uniform[0]
++
+ 
+ 
+ def launch(
+@@ -140,31 +152,34 @@ def launch(
+     override_params={}, save_policies=True, policy_path=None
+ ):
+     # Fork for multi-CPU MPI implementation.
+-    if num_cpu > 1:
+-        try:
+-            whoami = mpi_fork(num_cpu, ['--bind-to', 'core'])
+-        except CalledProcessError:
+-            # fancy version of mpi call failed, try simple version
+-            whoami = mpi_fork(num_cpu)
+-
+-        if whoami == 'parent':
+-            sys.exit(0)
+-        import baselines.common.tf_util as U
+-        U.single_threaded_session().__enter__()
+-    rank = MPI.COMM_WORLD.Get_rank()
++    # if num_cpu > 1:
++    #     try:
++    #         whoami = mpi_fork(num_cpu, ['--bind-to', 'core'])
++    #     except CalledProcessError:
++    #         # fancy version of mpi call failed, try simple version
++    #         whoami = mpi_fork(num_cpu)
++
++    #     if whoami == 'parent':
++    #         sys.exit(0)
++    #     import baselines.common.tf_util as U
++    #     U.single_threaded_session().__enter__()
++    # rank = MPI.COMM_WORLD.Get_rank()
++
+ 
+     # Configure logging
+-    if rank == 0:
+-        if logdir or logger.get_dir() is None:
+-            logger.configure(dir=logdir)
+-    else:
+-        logger.configure()
++    # if rank == 0:
++    #     if logdir or logger.get_dir() is None:
++    #         logger.configure(dir=logdir)
++    # else:
++    #     logger.configure()
++    logger.configure()
+     logdir = logger.get_dir()
+     assert logdir is not None
+     os.makedirs(logdir, exist_ok=True)
+ 
+     # Seed everything.
+-    rank_seed = seed + 1000000 * rank
++    # rank_seed = seed + 1000000 * rank
++    rank_seed = seed + 1000000
+     set_global_seeds(rank_seed)
+ 
+     # Prepare params.
+-- 
+2.39.3
+

@@ -1,0 +1,75 @@
+git add .
+
+git commit -m "add file"
+
+git push
+
+4.初始化分支
+
+git add .
+
+git commit -m "inited"
+
+注：此时可以使用git branch，会看到有master分支，但使用命令 git branch -a是看不到远程仓库的。
+
+5.同步方式1：与github的main分支保持一致。
+
+a.拉取远程代码
+
+此时创建新分支main，因为本地的git主分支是master，而远程的Github仓库中主分支是main。
+
+此时不能直接推送，因为可能远程的github仓库中main仓库有其他代码，为了保证本地和远程一致，需要在本地通过git pull命令来拉取远程仓库。
+
+git checkout -b main
+
+git pull origin main --allow-unrelated-histories
+
+此时就可以在本地文件夹中，不仅可以看到原有的内容，还可以看到远程github中拷贝过来的新内容了。
+
+
+
+注：git pull：命令的作用是从远程仓库获取最新版本并合并到本地仓库
+
+命令格式：git pull 远程仓库简称 分支名称
+
+注意：如果当前本地仓库不是从远程仓库克隆，而是本地创建的仓库，并且仓库中存在文件，此时再从远程仓库拉取文件的时候会报错（fatal: refusing to merge unrelated histories ）
+
+解决此问题可以在git pull命令后加入参数--allow-unrelated-histories
+
+b.推送本地代码
+
+然后执行git push -u origin main。
+
+此时打开Github的当前仓库，即可看到在main分支中已经有了本地文件夹中的内容。
+
+
+
+注：今后所有的本地开发，都基于main分支操作，不需要再切换回master分支，这样就可以与Github中的当前分支保持一致了。
+
+如果有代码修改，如上面，依次执行 git add .和git commit命令，然后再执行git push命令。
+
+此时及以后再使用git push即可，不需要再用git push -u origin main
+
+
+
+c.此时查看分支有如下3种方式：
+
+git branch 		列出所有本地分支
+
+git branch -r 	列出所有远程分支
+
+git branch -a 	列出所有本地分支和远程分支
+
+
+
+6.同步方式2：基于master分支同步到Github仓库时同时创建master分支
+
+git push 
+
+git push -u origin master
+
+将本地仓库内容推送到远程仓库，命令格式：git push 远程仓库简称 分支名称
+
+
+
+注：Github上的主分支名称是main，而不是master，此处相当于对仓库新建了分支。推送后，需要自己到Github上切换分支查看。
