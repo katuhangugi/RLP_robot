@@ -1,0 +1,875 @@
+Logging to ./logs/seed0/ResidualComplexHook-v0/ResidualComplexHook-v0_20250701-210059
+T: 100
+_Q_lr: 0.001
+_action_l2: 1.0
+_batch_size: 256
+_buffer_size: 1000000
+_clip_obs: 200.0
+_hidden: 256
+_layers: 3
+_max_u: 1.0
+_network_class: models.actor_critic_last_zeros:ActorCritic
+_norm_clip: 5
+_norm_eps: 0.01
+_pi_lr: 0.001
+_polyak: 0.95
+_relative_goals: False
+_scope: ddpg
+controller_prop: 0.8
+ddpg_params: {'buffer_size': 1000000, 'hidden': 256, 'layers': 3, 'network_class': 'models.actor_critic_last_zeros:ActorCritic', 'polyak': 0.95, 'batch_size': 256, 'Q_lr': 0.001, 'pi_lr': 0.001, 'norm_eps': 0.01, 'norm_clip': 5, 'max_u': 1.0, 'action_l2': 1.0, 'clip_obs': 200.0, 'scope': 'ddpg', 'relative_goals': False}
+env_name: ResidualComplexHook-v0
+gamma: 0.99
+make_env: <function prepare_params.<locals>.make_env at 0x7fce1c1beef0>
+n_batches: 40
+n_cycles: 50
+n_test_rollouts: 50
+noise_eps: 0.1
+random_eps: 0.3
+replay_k: 4
+replay_strategy: future
+rollout_batch_size: 4
+test_with_polyak: False
+threshold: 1.0
+
+*** Warning ***
+You are running HER with just a single MPI worker. This will work, but the experiments that we report in Plappert et al. (2018, https://arxiv.org/abs/1802.09464) were obtained with --num_cpu 19. This makes a significant difference and if you are looking to reproduce those results, be aware of this. Please also refer to https://github.com/openai/baselines/issues/314 for further details.
+****************
+
+Creating a DDPG agent with action space 4 x 1.0...
+Training...
+-----------------------------------
+| epoch              | 0          |
+| stats_g/mean       | 0.98060375 |
+| stats_g/std        | 0.14400011 |
+| stats_o/mean       | 0.20040074 |
+| stats_o/std        | 0.1084698  |
+| test/episode       | 200        |
+| test/mean_Q        | -2.8192694 |
+| test/returns       | -97.8      |
+| test/success_rate  | 0.03       |
+| train/episode      | 200        |
+| train/returns      | -92        |
+| train/success_rate | 0.13       |
+-----------------------------------
+New best success rate: 0.03. Saving policy to ./logs/seed0/ResidualComplexHook-v0/ResidualComplexHook-v0_20250701-210059/policy_best.pkl ...
+Saving periodic policy to ./logs/seed0/ResidualComplexHook-v0/ResidualComplexHook-v0_20250701-210059/policy_0.pkl ...
+------------------------------------
+| epoch              | 1           |
+| stats_g/mean       | 0.9807093   |
+| stats_g/std        | 0.1440002   |
+| stats_o/mean       | 0.19792448  |
+| stats_o/std        | 0.124938205 |
+| test/episode       | 400         |
+| test/mean_Q        | -5.0644307  |
+| test/returns       | -98.9       |
+| test/success_rate  | 0.01        |
+| train/episode      | 400         |
+| train/returns      | -91.9       |
+| train/success_rate | 0.125       |
+------------------------------------
+-----------------------------------
+| epoch              | 2          |
+| stats_g/mean       | 0.98321533 |
+| stats_g/std        | 0.13716663 |
+| stats_o/mean       | 0.19805089 |
+| stats_o/std        | 0.1256068  |
+| test/episode       | 600        |
+| test/mean_Q        | -7.218698  |
+| test/returns       | -97.5      |
+| test/success_rate  | 0.04       |
+| train/episode      | 600        |
+| train/returns      | -95.9      |
+| train/success_rate | 0.055      |
+-----------------------------------
+New best success rate: 0.04. Saving policy to ./logs/seed0/ResidualComplexHook-v0/ResidualComplexHook-v0_20250701-210059/policy_best.pkl ...
+-----------------------------------
+| epoch              | 3          |
+| stats_g/mean       | 0.9837928  |
+| stats_g/std        | 0.1355216  |
+| stats_o/mean       | 0.19851565 |
+| stats_o/std        | 0.12414949 |
+| test/episode       | 800        |
+| test/mean_Q        | -8.0798025 |
+| test/returns       | -89.2      |
+| test/success_rate  | 0.17       |
+| train/episode      | 800        |
+| train/returns      | -90.8      |
+| train/success_rate | 0.13       |
+-----------------------------------
+New best success rate: 0.17. Saving policy to ./logs/seed0/ResidualComplexHook-v0/ResidualComplexHook-v0_20250701-210059/policy_best.pkl ...
+-----------------------------------
+| epoch              | 4          |
+| stats_g/mean       | 0.984139   |
+| stats_g/std        | 0.13580485 |
+| stats_o/mean       | 0.1985636  |
+| stats_o/std        | 0.12626702 |
+| test/episode       | 1000       |
+| test/mean_Q        | -11.398041 |
+| test/returns       | -98.4      |
+| test/success_rate  | 0.03       |
+| train/episode      | 1000       |
+| train/returns      | -90.4      |
+| train/success_rate | 0.17       |
+-----------------------------------
+-----------------------------------
+| epoch              | 5          |
+| stats_g/mean       | 0.9834886  |
+| stats_g/std        | 0.13275404 |
+| stats_o/mean       | 0.19650745 |
+| stats_o/std        | 0.13162793 |
+| test/episode       | 1200       |
+| test/mean_Q        | -13.16974  |
+| test/returns       | -99.8      |
+| test/success_rate  | 0.01       |
+| train/episode      | 1200       |
+| train/returns      | -95        |
+| train/success_rate | 0.095      |
+-----------------------------------
+Saving periodic policy to ./logs/seed0/ResidualComplexHook-v0/ResidualComplexHook-v0_20250701-210059/policy_5.pkl ...
+-----------------------------------
+| epoch              | 6          |
+| stats_g/mean       | 0.9827871  |
+| stats_g/std        | 0.12845284 |
+| stats_o/mean       | 0.19642197 |
+| stats_o/std        | 0.1337918  |
+| test/episode       | 1400       |
+| test/mean_Q        | -14.799039 |
+| test/returns       | -98.8      |
+| test/success_rate  | 0.01       |
+| train/episode      | 1400       |
+| train/returns      | -95.9      |
+| train/success_rate | 0.085      |
+-----------------------------------
+-----------------------------------
+| epoch              | 7          |
+| stats_g/mean       | 0.9828782  |
+| stats_g/std        | 0.12408772 |
+| stats_o/mean       | 0.19551083 |
+| stats_o/std        | 0.1362855  |
+| test/episode       | 1600       |
+| test/mean_Q        | -16.658318 |
+| test/returns       | -98.5      |
+| test/success_rate  | 0.02       |
+| train/episode      | 1600       |
+| train/returns      | -96.9      |
+| train/success_rate | 0.055      |
+-----------------------------------
+-----------------------------------
+| epoch              | 8          |
+| stats_g/mean       | 0.9828768  |
+| stats_g/std        | 0.12674533 |
+| stats_o/mean       | 0.19580288 |
+| stats_o/std        | 0.13885657 |
+| test/episode       | 1800       |
+| test/mean_Q        | -16.229712 |
+| test/returns       | -94        |
+| test/success_rate  | 0.095      |
+| train/episode      | 1800       |
+| train/returns      | -91        |
+| train/success_rate | 0.15       |
+-----------------------------------
+-----------------------------------
+| epoch              | 9          |
+| stats_g/mean       | 0.98182315 |
+| stats_g/std        | 0.12482142 |
+| stats_o/mean       | 0.19566374 |
+| stats_o/std        | 0.13815354 |
+| test/episode       | 2000       |
+| test/mean_Q        | -15.568005 |
+| test/returns       | -87.6      |
+| test/success_rate  | 0.18       |
+| train/episode      | 2000       |
+| train/returns      | -81.7      |
+| train/success_rate | 0.27       |
+-----------------------------------
+New best success rate: 0.18. Saving policy to ./logs/seed0/ResidualComplexHook-v0/ResidualComplexHook-v0_20250701-210059/policy_best.pkl ...
+-----------------------------------
+| epoch              | 10         |
+| stats_g/mean       | 0.98187    |
+| stats_g/std        | 0.1295595  |
+| stats_o/mean       | 0.19615857 |
+| stats_o/std        | 0.13985266 |
+| test/episode       | 2200       |
+| test/mean_Q        | -12.63388  |
+| test/returns       | -73.1      |
+| test/success_rate  | 0.38       |
+| train/episode      | 2200       |
+| train/returns      | -85.9      |
+| train/success_rate | 0.23       |
+-----------------------------------
+New best success rate: 0.38. Saving policy to ./logs/seed0/ResidualComplexHook-v0/ResidualComplexHook-v0_20250701-210059/policy_best.pkl ...
+Saving periodic policy to ./logs/seed0/ResidualComplexHook-v0/ResidualComplexHook-v0_20250701-210059/policy_10.pkl ...
+-----------------------------------
+| epoch              | 11         |
+| stats_g/mean       | 0.98173237 |
+| stats_g/std        | 0.13091378 |
+| stats_o/mean       | 0.19711271 |
+| stats_o/std        | 0.14353642 |
+| test/episode       | 2400       |
+| test/mean_Q        | -20.451916 |
+| test/returns       | -99        |
+| test/success_rate  | 0.015      |
+| train/episode      | 2400       |
+| train/returns      | -89.8      |
+| train/success_rate | 0.155      |
+-----------------------------------
+-----------------------------------
+| epoch              | 12         |
+| stats_g/mean       | 0.9814541  |
+| stats_g/std        | 0.13116257 |
+| stats_o/mean       | 0.19731097 |
+| stats_o/std        | 0.14328755 |
+| test/episode       | 2600       |
+| test/mean_Q        | -20.50015  |
+| test/returns       | -92.2      |
+| test/success_rate  | 0.105      |
+| train/episode      | 2600       |
+| train/returns      | -84.5      |
+| train/success_rate | 0.245      |
+-----------------------------------
+-----------------------------------
+| epoch              | 13         |
+| stats_g/mean       | 0.9809025  |
+| stats_g/std        | 0.1300497  |
+| stats_o/mean       | 0.19755802 |
+| stats_o/std        | 0.1431426  |
+| test/episode       | 2800       |
+| test/mean_Q        | -21.12179  |
+| test/returns       | -93.9      |
+| test/success_rate  | 0.095      |
+| train/episode      | 2800       |
+| train/returns      | -83        |
+| train/success_rate | 0.265      |
+-----------------------------------
+-----------------------------------
+| epoch              | 14         |
+| stats_g/mean       | 0.9802666  |
+| stats_g/std        | 0.12977712 |
+| stats_o/mean       | 0.19793738 |
+| stats_o/std        | 0.14230123 |
+| test/episode       | 3000       |
+| test/mean_Q        | -14.258287 |
+| test/returns       | -69.8      |
+| test/success_rate  | 0.43       |
+| train/episode      | 3000       |
+| train/returns      | -81.4      |
+| train/success_rate | 0.285      |
+-----------------------------------
+New best success rate: 0.43. Saving policy to ./logs/seed0/ResidualComplexHook-v0/ResidualComplexHook-v0_20250701-210059/policy_best.pkl ...
+-----------------------------------
+| epoch              | 15         |
+| stats_g/mean       | 0.9795068  |
+| stats_g/std        | 0.13082361 |
+| stats_o/mean       | 0.19809863 |
+| stats_o/std        | 0.1417305  |
+| test/episode       | 3200       |
+| test/mean_Q        | -16.0053   |
+| test/returns       | -74.5      |
+| test/success_rate  | 0.38       |
+| train/episode      | 3200       |
+| train/returns      | -74.7      |
+| train/success_rate | 0.36       |
+-----------------------------------
+Saving periodic policy to ./logs/seed0/ResidualComplexHook-v0/ResidualComplexHook-v0_20250701-210059/policy_15.pkl ...
+-----------------------------------
+| epoch              | 16         |
+| stats_g/mean       | 0.97897    |
+| stats_g/std        | 0.12974086 |
+| stats_o/mean       | 0.19826831 |
+| stats_o/std        | 0.14055374 |
+| test/episode       | 3400       |
+| test/mean_Q        | -20.623432 |
+| test/returns       | -81.8      |
+| test/success_rate  | 0.29       |
+| train/episode      | 3400       |
+| train/returns      | -77.6      |
+| train/success_rate | 0.305      |
+-----------------------------------
+-----------------------------------
+| epoch              | 17         |
+| stats_g/mean       | 0.9787181  |
+| stats_g/std        | 0.12862635 |
+| stats_o/mean       | 0.19819713 |
+| stats_o/std        | 0.14221641 |
+| test/episode       | 3600       |
+| test/mean_Q        | -21.226334 |
+| test/returns       | -84.4      |
+| test/success_rate  | 0.265      |
+| train/episode      | 3600       |
+| train/returns      | -86.7      |
+| train/success_rate | 0.18       |
+-----------------------------------
+-----------------------------------
+| epoch              | 18         |
+| stats_g/mean       | 0.9783859  |
+| stats_g/std        | 0.12918688 |
+| stats_o/mean       | 0.19825403 |
+| stats_o/std        | 0.14109513 |
+| test/episode       | 3800       |
+| test/mean_Q        | -14.052965 |
+| test/returns       | -64.6      |
+| test/success_rate  | 0.54       |
+| train/episode      | 3800       |
+| train/returns      | -78        |
+| train/success_rate | 0.345      |
+-----------------------------------
+New best success rate: 0.54. Saving policy to ./logs/seed0/ResidualComplexHook-v0/ResidualComplexHook-v0_20250701-210059/policy_best.pkl ...
+-----------------------------------
+| epoch              | 19         |
+| stats_g/mean       | 0.97801375 |
+| stats_g/std        | 0.13006766 |
+| stats_o/mean       | 0.19822547 |
+| stats_o/std        | 0.14000443 |
+| test/episode       | 4000       |
+| test/mean_Q        | -14.680598 |
+| test/returns       | -63.3      |
+| test/success_rate  | 0.525      |
+| train/episode      | 4000       |
+| train/returns      | -70.7      |
+| train/success_rate | 0.425      |
+-----------------------------------
+-----------------------------------
+| epoch              | 20         |
+| stats_g/mean       | 0.9775091  |
+| stats_g/std        | 0.13011146 |
+| stats_o/mean       | 0.19833747 |
+| stats_o/std        | 0.13824512 |
+| test/episode       | 4200       |
+| test/mean_Q        | -15.238242 |
+| test/returns       | -64.5      |
+| test/success_rate  | 0.51       |
+| train/episode      | 4200       |
+| train/returns      | -69.5      |
+| train/success_rate | 0.435      |
+-----------------------------------
+Saving periodic policy to ./logs/seed0/ResidualComplexHook-v0/ResidualComplexHook-v0_20250701-210059/policy_20.pkl ...
+-----------------------------------
+| epoch              | 21         |
+| stats_g/mean       | 0.9769036  |
+| stats_g/std        | 0.12940878 |
+| stats_o/mean       | 0.19838753 |
+| stats_o/std        | 0.13674071 |
+| test/episode       | 4400       |
+| test/mean_Q        | -14.94975  |
+| test/returns       | -60.2      |
+| test/success_rate  | 0.565      |
+| train/episode      | 4400       |
+| train/returns      | -73.3      |
+| train/success_rate | 0.355      |
+-----------------------------------
+New best success rate: 0.565. Saving policy to ./logs/seed0/ResidualComplexHook-v0/ResidualComplexHook-v0_20250701-210059/policy_best.pkl ...
+-----------------------------------
+| epoch              | 22         |
+| stats_g/mean       | 0.9765809  |
+| stats_g/std        | 0.13016179 |
+| stats_o/mean       | 0.19856909 |
+| stats_o/std        | 0.1357989  |
+| test/episode       | 4600       |
+| test/mean_Q        | -12.544807 |
+| test/returns       | -55        |
+| test/success_rate  | 0.605      |
+| train/episode      | 4600       |
+| train/returns      | -65.5      |
+| train/success_rate | 0.49       |
+-----------------------------------
+New best success rate: 0.605. Saving policy to ./logs/seed0/ResidualComplexHook-v0/ResidualComplexHook-v0_20250701-210059/policy_best.pkl ...
+-----------------------------------
+| epoch              | 23         |
+| stats_g/mean       | 0.9762152  |
+| stats_g/std        | 0.1298719  |
+| stats_o/mean       | 0.19866599 |
+| stats_o/std        | 0.13460614 |
+| test/episode       | 4800       |
+| test/mean_Q        | -15.090149 |
+| test/returns       | -57.9      |
+| test/success_rate  | 0.595      |
+| train/episode      | 4800       |
+| train/returns      | -68        |
+| train/success_rate | 0.43       |
+-----------------------------------
+-----------------------------------
+| epoch              | 24         |
+| stats_g/mean       | 0.9756947  |
+| stats_g/std        | 0.13000768 |
+| stats_o/mean       | 0.1987245  |
+| stats_o/std        | 0.13321772 |
+| test/episode       | 5000       |
+| test/mean_Q        | -17.451565 |
+| test/returns       | -68        |
+| test/success_rate  | 0.455      |
+| train/episode      | 5000       |
+| train/returns      | -71.4      |
+| train/success_rate | 0.425      |
+-----------------------------------
+-----------------------------------
+| epoch              | 25         |
+| stats_g/mean       | 0.97523546 |
+| stats_g/std        | 0.13018784 |
+| stats_o/mean       | 0.19878396 |
+| stats_o/std        | 0.13192855 |
+| test/episode       | 5200       |
+| test/mean_Q        | -17.137016 |
+| test/returns       | -64.9      |
+| test/success_rate  | 0.475      |
+| train/episode      | 5200       |
+| train/returns      | -69.9      |
+| train/success_rate | 0.43       |
+-----------------------------------
+Saving periodic policy to ./logs/seed0/ResidualComplexHook-v0/ResidualComplexHook-v0_20250701-210059/policy_25.pkl ...
+-----------------------------------
+| epoch              | 26         |
+| stats_g/mean       | 0.9748947  |
+| stats_g/std        | 0.12975593 |
+| stats_o/mean       | 0.19884336 |
+| stats_o/std        | 0.13100962 |
+| test/episode       | 5400       |
+| test/mean_Q        | -15.61216  |
+| test/returns       | -61.4      |
+| test/success_rate  | 0.515      |
+| train/episode      | 5400       |
+| train/returns      | -70.9      |
+| train/success_rate | 0.425      |
+-----------------------------------
+-----------------------------------
+| epoch              | 27         |
+| stats_g/mean       | 0.9746396  |
+| stats_g/std        | 0.12968437 |
+| stats_o/mean       | 0.19892839 |
+| stats_o/std        | 0.13001516 |
+| test/episode       | 5600       |
+| test/mean_Q        | -13.573665 |
+| test/returns       | -59.1      |
+| test/success_rate  | 0.56       |
+| train/episode      | 5600       |
+| train/returns      | -67.9      |
+| train/success_rate | 0.465      |
+-----------------------------------
+-----------------------------------
+| epoch              | 28         |
+| stats_g/mean       | 0.974186   |
+| stats_g/std        | 0.12859656 |
+| stats_o/mean       | 0.19906309 |
+| stats_o/std        | 0.12854813 |
+| test/episode       | 5800       |
+| test/mean_Q        | -16.380598 |
+| test/returns       | -59        |
+| test/success_rate  | 0.62       |
+| train/episode      | 5800       |
+| train/returns      | -65.3      |
+| train/success_rate | 0.525      |
+-----------------------------------
+New best success rate: 0.62. Saving policy to ./logs/seed0/ResidualComplexHook-v0/ResidualComplexHook-v0_20250701-210059/policy_best.pkl ...
+-----------------------------------
+| epoch              | 29         |
+| stats_g/mean       | 0.9737591  |
+| stats_g/std        | 0.12870143 |
+| stats_o/mean       | 0.19912483 |
+| stats_o/std        | 0.12751564 |
+| test/episode       | 6000       |
+| test/mean_Q        | -18.20036  |
+| test/returns       | -73.5      |
+| test/success_rate  | 0.395      |
+| train/episode      | 6000       |
+| train/returns      | -63.7      |
+| train/success_rate | 0.545      |
+-----------------------------------
+-----------------------------------
+| epoch              | 30         |
+| stats_g/mean       | 0.97326666 |
+| stats_g/std        | 0.12829645 |
+| stats_o/mean       | 0.19915329 |
+| stats_o/std        | 0.126447   |
+| test/episode       | 6200       |
+| test/mean_Q        | -14.024042 |
+| test/returns       | -53.9      |
+| test/success_rate  | 0.66       |
+| train/episode      | 6200       |
+| train/returns      | -64.6      |
+| train/success_rate | 0.51       |
+-----------------------------------
+New best success rate: 0.66. Saving policy to ./logs/seed0/ResidualComplexHook-v0/ResidualComplexHook-v0_20250701-210059/policy_best.pkl ...
+Saving periodic policy to ./logs/seed0/ResidualComplexHook-v0/ResidualComplexHook-v0_20250701-210059/policy_30.pkl ...
+-----------------------------------
+| epoch              | 31         |
+| stats_g/mean       | 0.97285366 |
+| stats_g/std        | 0.12808152 |
+| stats_o/mean       | 0.19917989 |
+| stats_o/std        | 0.1255524  |
+| test/episode       | 6400       |
+| test/mean_Q        | -15.31596  |
+| test/returns       | -52.7      |
+| test/success_rate  | 0.65       |
+| train/episode      | 6400       |
+| train/returns      | -63.8      |
+| train/success_rate | 0.535      |
+-----------------------------------
+-----------------------------------
+| epoch              | 32         |
+| stats_g/mean       | 0.97244376 |
+| stats_g/std        | 0.12735608 |
+| stats_o/mean       | 0.19912507 |
+| stats_o/std        | 0.12496771 |
+| test/episode       | 6600       |
+| test/mean_Q        | -13.114525 |
+| test/returns       | -46.5      |
+| test/success_rate  | 0.75       |
+| train/episode      | 6600       |
+| train/returns      | -61.7      |
+| train/success_rate | 0.555      |
+-----------------------------------
+New best success rate: 0.75. Saving policy to ./logs/seed0/ResidualComplexHook-v0/ResidualComplexHook-v0_20250701-210059/policy_best.pkl ...
+-----------------------------------
+| epoch              | 33         |
+| stats_g/mean       | 0.97206426 |
+| stats_g/std        | 0.12681243 |
+| stats_o/mean       | 0.19914523 |
+| stats_o/std        | 0.12388329 |
+| test/episode       | 6800       |
+| test/mean_Q        | -13.463909 |
+| test/returns       | -49.9      |
+| test/success_rate  | 0.705      |
+| train/episode      | 6800       |
+| train/returns      | -59.9      |
+| train/success_rate | 0.585      |
+-----------------------------------
+-----------------------------------
+| epoch              | 34         |
+| stats_g/mean       | 0.9716439  |
+| stats_g/std        | 0.12619203 |
+| stats_o/mean       | 0.19910915 |
+| stats_o/std        | 0.12300177 |
+| test/episode       | 7000       |
+| test/mean_Q        | -18.833715 |
+| test/returns       | -59.9      |
+| test/success_rate  | 0.555      |
+| train/episode      | 7000       |
+| train/returns      | -65.4      |
+| train/success_rate | 0.475      |
+-----------------------------------
+-----------------------------------
+| epoch              | 35         |
+| stats_g/mean       | 0.97127956 |
+| stats_g/std        | 0.12603243 |
+| stats_o/mean       | 0.19905622 |
+| stats_o/std        | 0.12244554 |
+| test/episode       | 7200       |
+| test/mean_Q        | -18.144276 |
+| test/returns       | -59.6      |
+| test/success_rate  | 0.56       |
+| train/episode      | 7200       |
+| train/returns      | -64.4      |
+| train/success_rate | 0.515      |
+-----------------------------------
+Saving periodic policy to ./logs/seed0/ResidualComplexHook-v0/ResidualComplexHook-v0_20250701-210059/policy_35.pkl ...
+-----------------------------------
+| epoch              | 36         |
+| stats_g/mean       | 0.9708913  |
+| stats_g/std        | 0.12540895 |
+| stats_o/mean       | 0.19902332 |
+| stats_o/std        | 0.12166075 |
+| test/episode       | 7400       |
+| test/mean_Q        | -15.27483  |
+| test/returns       | -51.8      |
+| test/success_rate  | 0.65       |
+| train/episode      | 7400       |
+| train/returns      | -66        |
+| train/success_rate | 0.51       |
+-----------------------------------
+-----------------------------------
+| epoch              | 37         |
+| stats_g/mean       | 0.9706139  |
+| stats_g/std        | 0.12520221 |
+| stats_o/mean       | 0.19904964 |
+| stats_o/std        | 0.12104877 |
+| test/episode       | 7600       |
+| test/mean_Q        | -16.979086 |
+| test/returns       | -56.8      |
+| test/success_rate  | 0.605      |
+| train/episode      | 7600       |
+| train/returns      | -64.9      |
+| train/success_rate | 0.485      |
+-----------------------------------
+-----------------------------------
+| epoch              | 38         |
+| stats_g/mean       | 0.97049075 |
+| stats_g/std        | 0.12599564 |
+| stats_o/mean       | 0.199098   |
+| stats_o/std        | 0.12055173 |
+| test/episode       | 7800       |
+| test/mean_Q        | -16.638573 |
+| test/returns       | -51.5      |
+| test/success_rate  | 0.675      |
+| train/episode      | 7800       |
+| train/returns      | -62.5      |
+| train/success_rate | 0.515      |
+-----------------------------------
+-----------------------------------
+| epoch              | 39         |
+| stats_g/mean       | 0.9702458  |
+| stats_g/std        | 0.12601975 |
+| stats_o/mean       | 0.19913621 |
+| stats_o/std        | 0.11995573 |
+| test/episode       | 8000       |
+| test/mean_Q        | -15.782173 |
+| test/returns       | -52        |
+| test/success_rate  | 0.665      |
+| train/episode      | 8000       |
+| train/returns      | -59.9      |
+| train/success_rate | 0.54       |
+-----------------------------------
+-----------------------------------
+| epoch              | 40         |
+| stats_g/mean       | 0.96983904 |
+| stats_g/std        | 0.12571964 |
+| stats_o/mean       | 0.19914111 |
+| stats_o/std        | 0.11923434 |
+| test/episode       | 8200       |
+| test/mean_Q        | -13.373151 |
+| test/returns       | -48.4      |
+| test/success_rate  | 0.715      |
+| train/episode      | 8200       |
+| train/returns      | -57.9      |
+| train/success_rate | 0.615      |
+-----------------------------------
+Saving periodic policy to ./logs/seed0/ResidualComplexHook-v0/ResidualComplexHook-v0_20250701-210059/policy_40.pkl ...
+-----------------------------------
+| epoch              | 41         |
+| stats_g/mean       | 0.96949023 |
+| stats_g/std        | 0.12520961 |
+| stats_o/mean       | 0.19914173 |
+| stats_o/std        | 0.11845996 |
+| test/episode       | 8400       |
+| test/mean_Q        | -14.879643 |
+| test/returns       | -47.3      |
+| test/success_rate  | 0.71       |
+| train/episode      | 8400       |
+| train/returns      | -59.7      |
+| train/success_rate | 0.575      |
+-----------------------------------
+-----------------------------------
+| epoch              | 42         |
+| stats_g/mean       | 0.96930075 |
+| stats_g/std        | 0.12538628 |
+| stats_o/mean       | 0.19918844 |
+| stats_o/std        | 0.11791881 |
+| test/episode       | 8600       |
+| test/mean_Q        | -13.912655 |
+| test/returns       | -47.7      |
+| test/success_rate  | 0.735      |
+| train/episode      | 8600       |
+| train/returns      | -63.2      |
+| train/success_rate | 0.515      |
+-----------------------------------
+------------------------------------
+| epoch              | 43          |
+| stats_g/mean       | 0.96906656  |
+| stats_g/std        | 0.12548386  |
+| stats_o/mean       | 0.19916716  |
+| stats_o/std        | 0.117519535 |
+| test/episode       | 8800        |
+| test/mean_Q        | -15.318503  |
+| test/returns       | -49.6       |
+| test/success_rate  | 0.73        |
+| train/episode      | 8800        |
+| train/returns      | -59.8       |
+| train/success_rate | 0.575       |
+------------------------------------
+------------------------------------
+| epoch              | 44          |
+| stats_g/mean       | 0.968815    |
+| stats_g/std        | 0.12538151  |
+| stats_o/mean       | 0.19916764  |
+| stats_o/std        | 0.117011234 |
+| test/episode       | 9000        |
+| test/mean_Q        | -16.677744  |
+| test/returns       | -52.8       |
+| test/success_rate  | 0.68        |
+| train/episode      | 9000        |
+| train/returns      | -57.6       |
+| train/success_rate | 0.62        |
+------------------------------------
+------------------------------------
+| epoch              | 45          |
+| stats_g/mean       | 0.96861625  |
+| stats_g/std        | 0.12556247  |
+| stats_o/mean       | 0.19920889  |
+| stats_o/std        | 0.116348505 |
+| test/episode       | 9200        |
+| test/mean_Q        | -14.942799  |
+| test/returns       | -51.7       |
+| test/success_rate  | 0.665       |
+| train/episode      | 9200        |
+| train/returns      | -58.5       |
+| train/success_rate | 0.59        |
+------------------------------------
+Saving periodic policy to ./logs/seed0/ResidualComplexHook-v0/ResidualComplexHook-v0_20250701-210059/policy_45.pkl ...
+------------------------------------
+| epoch              | 46          |
+| stats_g/mean       | 0.96831876  |
+| stats_g/std        | 0.1252669   |
+| stats_o/mean       | 0.19921835  |
+| stats_o/std        | 0.115770556 |
+| test/episode       | 9400        |
+| test/mean_Q        | -14.481241  |
+| test/returns       | -47.7       |
+| test/success_rate  | 0.71        |
+| train/episode      | 9400        |
+| train/returns      | -58.1       |
+| train/success_rate | 0.55        |
+------------------------------------
+------------------------------------
+| epoch              | 47          |
+| stats_g/mean       | 0.9683109   |
+| stats_g/std        | 0.12562194  |
+| stats_o/mean       | 0.19929293  |
+| stats_o/std        | 0.115451455 |
+| test/episode       | 9600        |
+| test/mean_Q        | -17.740477  |
+| test/returns       | -49.3       |
+| test/success_rate  | 0.695       |
+| train/episode      | 9600        |
+| train/returns      | -61         |
+| train/success_rate | 0.565       |
+------------------------------------
+-----------------------------------
+| epoch              | 48         |
+| stats_g/mean       | 0.96810246 |
+| stats_g/std        | 0.12552088 |
+| stats_o/mean       | 0.19936159 |
+| stats_o/std        | 0.11551237 |
+| test/episode       | 9800       |
+| test/mean_Q        | -17.550884 |
+| test/returns       | -49.7      |
+| test/success_rate  | 0.685      |
+| train/episode      | 9800       |
+| train/returns      | -60.7      |
+| train/success_rate | 0.56       |
+-----------------------------------
+-----------------------------------
+| epoch              | 49         |
+| stats_g/mean       | 0.9677221  |
+| stats_g/std        | 0.12517738 |
+| stats_o/mean       | 0.19938578 |
+| stats_o/std        | 0.11513337 |
+| test/episode       | 10000      |
+| test/mean_Q        | -15.047189 |
+| test/returns       | -49.4      |
+| test/success_rate  | 0.71       |
+| train/episode      | 10000      |
+| train/returns      | -59.4      |
+| train/success_rate | 0.605      |
+-----------------------------------
+------------------------------------
+| epoch              | 50          |
+| stats_g/mean       | 0.9674878   |
+| stats_g/std        | 0.12488804  |
+| stats_o/mean       | 0.19939819  |
+| stats_o/std        | 0.114540085 |
+| test/episode       | 10200       |
+| test/mean_Q        | -17.040617  |
+| test/returns       | -48.9       |
+| test/success_rate  | 0.69        |
+| train/episode      | 10200       |
+| train/returns      | -59.5       |
+| train/success_rate | 0.57        |
+------------------------------------
+Saving periodic policy to ./logs/seed0/ResidualComplexHook-v0/ResidualComplexHook-v0_20250701-210059/policy_50.pkl ...
+-----------------------------------
+| epoch              | 51         |
+| stats_g/mean       | 0.96745914 |
+| stats_g/std        | 0.12536518 |
+| stats_o/mean       | 0.19944814 |
+| stats_o/std        | 0.11419141 |
+| test/episode       | 10400      |
+| test/mean_Q        | -19.842276 |
+| test/returns       | -53.5      |
+| test/success_rate  | 0.645      |
+| train/episode      | 10400      |
+| train/returns      | -63.8      |
+| train/success_rate | 0.525      |
+-----------------------------------
+-----------------------------------
+| epoch              | 52         |
+| stats_g/mean       | 0.9673336  |
+| stats_g/std        | 0.12497722 |
+| stats_o/mean       | 0.199454   |
+| stats_o/std        | 0.11358478 |
+| test/episode       | 10600      |
+| test/mean_Q        | -16.82181  |
+| test/returns       | -49.6      |
+| test/success_rate  | 0.67       |
+| train/episode      | 10600      |
+| train/returns      | -56.5      |
+| train/success_rate | 0.625      |
+-----------------------------------
+------------------------------------
+| epoch              | 53          |
+| stats_g/mean       | 0.9671221   |
+| stats_g/std        | 0.12476943  |
+| stats_o/mean       | 0.19945005  |
+| stats_o/std        | 0.113306895 |
+| test/episode       | 10800       |
+| test/mean_Q        | -16.685236  |
+| test/returns       | -51         |
+| test/success_rate  | 0.67        |
+| train/episode      | 10800       |
+| train/returns      | -59.2       |
+| train/success_rate | 0.575       |
+------------------------------------
+-----------------------------------
+| epoch              | 54         |
+| stats_g/mean       | 0.96687573 |
+| stats_g/std        | 0.12428249 |
+| stats_o/mean       | 0.19941393 |
+| stats_o/std        | 0.11282084 |
+| test/episode       | 11000      |
+| test/mean_Q        | -16.984978 |
+| test/returns       | -51.7      |
+| test/success_rate  | 0.64       |
+| train/episode      | 11000      |
+| train/returns      | -59.5      |
+| train/success_rate | 0.525      |
+-----------------------------------
+-----------------------------------
+| epoch              | 55         |
+| stats_g/mean       | 0.9667115  |
+| stats_g/std        | 0.12406674 |
+| stats_o/mean       | 0.19939986 |
+| stats_o/std        | 0.11258127 |
+| test/episode       | 11200      |
+| test/mean_Q        | -16.114023 |
+| test/returns       | -50.6      |
+| test/success_rate  | 0.645      |
+| train/episode      | 11200      |
+| train/returns      | -63.5      |
+| train/success_rate | 0.52       |
+-----------------------------------
+Saving periodic policy to ./logs/seed0/ResidualComplexHook-v0/ResidualComplexHook-v0_20250701-210059/policy_55.pkl ...
+------------------------------------
+| epoch              | 56          |
+| stats_g/mean       | 0.96667004  |
+| stats_g/std        | 0.12441035  |
+| stats_o/mean       | 0.19939744  |
+| stats_o/std        | 0.112373926 |
+| test/episode       | 11400       |
+| test/mean_Q        | -19.367563  |
+| test/returns       | -54.6       |
+| test/success_rate  | 0.615       |
+| train/episode      | 11400       |
+| train/returns      | -63.3       |
+| train/success_rate | 0.51        |
+------------------------------------
+-----------------------------------
+| epoch              | 57         |
+| stats_g/mean       | 0.9664397  |
+| stats_g/std        | 0.12404578 |
+| stats_o/mean       | 0.19939387 |
+| stats_o/std        | 0.11193802 |
+| test/episode       | 11600      |
+| test/mean_Q        | -12.695347 |
+| test/returns       | -48.7      |
+| test/success_rate  | 0.715      |
+| train/episode      | 11600      |
+| train/returns      | -55        |
+| train/success_rate | 0.65       |
+-----------------------------------

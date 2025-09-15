@@ -1,0 +1,915 @@
+Logging to ./logs/seed0/ComplexHook-v0_expertexplore/ComplexHook-v0_20250701-210133
+T: 100
+_Q_lr: 0.001
+_action_l2: 1.0
+_batch_size: 256
+_buffer_size: 1000000
+_clip_obs: 200.0
+_hidden: 256
+_layers: 3
+_max_u: 1.0
+_network_class: models.actor_critic_last_zeros:ActorCritic
+_norm_clip: 5
+_norm_eps: 0.01
+_pi_lr: 0.001
+_polyak: 0.95
+_relative_goals: False
+_scope: ddpg
+controller_prop: 0.8
+ddpg_params: {'buffer_size': 1000000, 'hidden': 256, 'layers': 3, 'network_class': 'models.actor_critic_last_zeros:ActorCritic', 'polyak': 0.95, 'batch_size': 256, 'Q_lr': 0.001, 'pi_lr': 0.001, 'norm_eps': 0.01, 'norm_clip': 5, 'max_u': 1.0, 'action_l2': 1.0, 'clip_obs': 200.0, 'scope': 'ddpg', 'relative_goals': False}
+env_name: ComplexHook-v0
+gamma: 0.99
+make_env: <function prepare_params.<locals>.make_env at 0x7feca4662ef0>
+n_batches: 40
+n_cycles: 50
+n_test_rollouts: 50
+noise_eps: 0.1
+random_eps: 0.6
+replay_k: 4
+replay_strategy: future
+rollout_batch_size: 4
+test_with_polyak: False
+threshold: 1.0
+
+*** Warning ***
+You are running HER with just a single MPI worker. This will work, but the experiments that we report in Plappert et al. (2018, https://arxiv.org/abs/1802.09464) were obtained with --num_cpu 19. This makes a significant difference and if you are looking to reproduce those results, be aware of this. Please also refer to https://github.com/openai/baselines/issues/314 for further details.
+****************
+
+Creating a DDPG agent with action space 4 x 1.0...
+Training...
+-----------------------------------
+| epoch              | 0          |
+| stats_g/mean       | 0.99152654 |
+| stats_g/std        | 0.13964055 |
+| stats_o/mean       | 0.19504794 |
+| stats_o/std        | 0.11904355 |
+| test/episode       | 200        |
+| test/mean_Q        | -2.6281762 |
+| test/returns       | -98.4      |
+| test/success_rate  | 0.02       |
+| train/episode      | 200        |
+| train/returns      | -98.4      |
+| train/success_rate | 0.02       |
+-----------------------------------
+New best success rate: 0.02. Saving policy to ./logs/seed0/ComplexHook-v0_expertexplore/ComplexHook-v0_20250701-210133/policy_best.pkl ...
+Saving periodic policy to ./logs/seed0/ComplexHook-v0_expertexplore/ComplexHook-v0_20250701-210133/policy_0.pkl ...
+------------------------------------
+| epoch              | 1           |
+| stats_g/mean       | 0.98942953  |
+| stats_g/std        | 0.1428724   |
+| stats_o/mean       | 0.19488493  |
+| stats_o/std        | 0.108633734 |
+| test/episode       | 400         |
+| test/mean_Q        | -5.0331993  |
+| test/returns       | -98.9       |
+| test/success_rate  | 0.01        |
+| train/episode      | 400         |
+| train/returns      | -98.8       |
+| train/success_rate | 0.01        |
+------------------------------------
+-----------------------------------
+| epoch              | 2          |
+| stats_g/mean       | 0.9890721  |
+| stats_g/std        | 0.13330302 |
+| stats_o/mean       | 0.1948421  |
+| stats_o/std        | 0.10175753 |
+| test/episode       | 600        |
+| test/mean_Q        | -6.875107  |
+| test/returns       | -99.2      |
+| test/success_rate  | 0.01       |
+| train/episode      | 600        |
+| train/returns      | -98.3      |
+| train/success_rate | 0.04       |
+-----------------------------------
+------------------------------------
+| epoch              | 3           |
+| stats_g/mean       | 0.98926616  |
+| stats_g/std        | 0.12952165  |
+| stats_o/mean       | 0.19490227  |
+| stats_o/std        | 0.101076916 |
+| test/episode       | 800         |
+| test/mean_Q        | -9.100704   |
+| test/returns       | -99.3       |
+| test/success_rate  | 0.01        |
+| train/episode      | 800         |
+| train/returns      | -98.8       |
+| train/success_rate | 0.03        |
+------------------------------------
+-----------------------------------
+| epoch              | 4          |
+| stats_g/mean       | 0.98998624 |
+| stats_g/std        | 0.12950571 |
+| stats_o/mean       | 0.1950337  |
+| stats_o/std        | 0.09880038 |
+| test/episode       | 1000       |
+| test/mean_Q        | -10.329164 |
+| test/returns       | -99.4      |
+| test/success_rate  | 0.01       |
+| train/episode      | 1000       |
+| train/returns      | -99.1      |
+| train/success_rate | 0.03       |
+-----------------------------------
+-----------------------------------
+| epoch              | 5          |
+| stats_g/mean       | 0.989193   |
+| stats_g/std        | 0.12717581 |
+| stats_o/mean       | 0.19507201 |
+| stats_o/std        | 0.09768275 |
+| test/episode       | 1200       |
+| test/mean_Q        | -12.212516 |
+| test/returns       | -99.8      |
+| test/success_rate  | 0.01       |
+| train/episode      | 1200       |
+| train/returns      | -98.9      |
+| train/success_rate | 0.045      |
+-----------------------------------
+Saving periodic policy to ./logs/seed0/ComplexHook-v0_expertexplore/ComplexHook-v0_20250701-210133/policy_5.pkl ...
+------------------------------------
+| epoch              | 6           |
+| stats_g/mean       | 0.9883225   |
+| stats_g/std        | 0.122108184 |
+| stats_o/mean       | 0.19495344  |
+| stats_o/std        | 0.09678437  |
+| test/episode       | 1400        |
+| test/mean_Q        | -14.411177  |
+| test/returns       | -99.3       |
+| test/success_rate  | 0.005       |
+| train/episode      | 1400        |
+| train/returns      | -98.4       |
+| train/success_rate | 0.045       |
+------------------------------------
+-----------------------------------
+| epoch              | 7          |
+| stats_g/mean       | 0.9880941  |
+| stats_g/std        | 0.11815249 |
+| stats_o/mean       | 0.19476815 |
+| stats_o/std        | 0.09674481 |
+| test/episode       | 1600       |
+| test/mean_Q        | -16.841917 |
+| test/returns       | -99.1      |
+| test/success_rate  | 0.01       |
+| train/episode      | 1600       |
+| train/returns      | -98.5      |
+| train/success_rate | 0.035      |
+-----------------------------------
+-----------------------------------
+| epoch              | 8          |
+| stats_g/mean       | 0.9881856  |
+| stats_g/std        | 0.12015758 |
+| stats_o/mean       | 0.19460583 |
+| stats_o/std        | 0.09753179 |
+| test/episode       | 1800       |
+| test/mean_Q        | -17.230848 |
+| test/returns       | -99.6      |
+| test/success_rate  | 0.005      |
+| train/episode      | 1800       |
+| train/returns      | -98.9      |
+| train/success_rate | 0.035      |
+-----------------------------------
+------------------------------------
+| epoch              | 9           |
+| stats_g/mean       | 0.9875867   |
+| stats_g/std        | 0.118299074 |
+| stats_o/mean       | 0.19435008  |
+| stats_o/std        | 0.098914556 |
+| test/episode       | 2000        |
+| test/mean_Q        | -19.109535  |
+| test/returns       | -99.6       |
+| test/success_rate  | 0.005       |
+| train/episode      | 2000        |
+| train/returns      | -98.5       |
+| train/success_rate | 0.035       |
+------------------------------------
+------------------------------------
+| epoch              | 10          |
+| stats_g/mean       | 0.9878487   |
+| stats_g/std        | 0.12318003  |
+| stats_o/mean       | 0.19418316  |
+| stats_o/std        | 0.101053834 |
+| test/episode       | 2200        |
+| test/mean_Q        | -20.123587  |
+| test/returns       | -98.6       |
+| test/success_rate  | 0.02        |
+| train/episode      | 2200        |
+| train/returns      | -97.1       |
+| train/success_rate | 0.075       |
+------------------------------------
+New best success rate: 0.02. Saving policy to ./logs/seed0/ComplexHook-v0_expertexplore/ComplexHook-v0_20250701-210133/policy_best.pkl ...
+Saving periodic policy to ./logs/seed0/ComplexHook-v0_expertexplore/ComplexHook-v0_20250701-210133/policy_10.pkl ...
+------------------------------------
+| epoch              | 11          |
+| stats_g/mean       | 0.9880302   |
+| stats_g/std        | 0.12529469  |
+| stats_o/mean       | 0.1940596   |
+| stats_o/std        | 0.102233805 |
+| test/episode       | 2400        |
+| test/mean_Q        | -23.185076  |
+| test/returns       | -99.4       |
+| test/success_rate  | 0.01        |
+| train/episode      | 2400        |
+| train/returns      | -98.9       |
+| train/success_rate | 0.03        |
+------------------------------------
+-----------------------------------
+| epoch              | 12         |
+| stats_g/mean       | 0.98777634 |
+| stats_g/std        | 0.12510888 |
+| stats_o/mean       | 0.19379668 |
+| stats_o/std        | 0.10239901 |
+| test/episode       | 2600       |
+| test/mean_Q        | -23.433949 |
+| test/returns       | -99.6      |
+| test/success_rate  | 0.01       |
+| train/episode      | 2600       |
+| train/returns      | -99.3      |
+| train/success_rate | 0.03       |
+-----------------------------------
+-----------------------------------
+| epoch              | 13         |
+| stats_g/mean       | 0.9875121  |
+| stats_g/std        | 0.12335086 |
+| stats_o/mean       | 0.19349587 |
+| stats_o/std        | 0.10365148 |
+| test/episode       | 2800       |
+| test/mean_Q        | -25.082447 |
+| test/returns       | -99.5      |
+| test/success_rate  | 0.005      |
+| train/episode      | 2800       |
+| train/returns      | -98.7      |
+| train/success_rate | 0.03       |
+-----------------------------------
+------------------------------------
+| epoch              | 14          |
+| stats_g/mean       | 0.9872434   |
+| stats_g/std        | 0.12267282  |
+| stats_o/mean       | 0.19323233  |
+| stats_o/std        | 0.104916856 |
+| test/episode       | 3000        |
+| test/mean_Q        | -26.309494  |
+| test/returns       | -99.5       |
+| test/success_rate  | 0.005       |
+| train/episode      | 3000        |
+| train/returns      | -99.1       |
+| train/success_rate | 0.025       |
+------------------------------------
+-----------------------------------
+| epoch              | 15         |
+| stats_g/mean       | 0.98713404 |
+| stats_g/std        | 0.12378428 |
+| stats_o/mean       | 0.19305761 |
+| stats_o/std        | 0.10591698 |
+| test/episode       | 3200       |
+| test/mean_Q        | -27.588856 |
+| test/returns       | -98.8      |
+| test/success_rate  | 0.015      |
+| train/episode      | 3200       |
+| train/returns      | -98.1      |
+| train/success_rate | 0.05       |
+-----------------------------------
+Saving periodic policy to ./logs/seed0/ComplexHook-v0_expertexplore/ComplexHook-v0_20250701-210133/policy_15.pkl ...
+------------------------------------
+| epoch              | 16          |
+| stats_g/mean       | 0.9871189   |
+| stats_g/std        | 0.122508176 |
+| stats_o/mean       | 0.19281061  |
+| stats_o/std        | 0.10660329  |
+| test/episode       | 3400        |
+| test/mean_Q        | -28.933186  |
+| test/returns       | -98.6       |
+| test/success_rate  | 0.025       |
+| train/episode      | 3400        |
+| train/returns      | -98.1       |
+| train/success_rate | 0.05        |
+------------------------------------
+New best success rate: 0.025. Saving policy to ./logs/seed0/ComplexHook-v0_expertexplore/ComplexHook-v0_20250701-210133/policy_best.pkl ...
+-----------------------------------
+| epoch              | 17         |
+| stats_g/mean       | 0.98696923 |
+| stats_g/std        | 0.12087435 |
+| stats_o/mean       | 0.19246763 |
+| stats_o/std        | 0.10773977 |
+| test/episode       | 3600       |
+| test/mean_Q        | -30.702557 |
+| test/returns       | -99.5      |
+| test/success_rate  | 0.01       |
+| train/episode      | 3600       |
+| train/returns      | -98.9      |
+| train/success_rate | 0.035      |
+-----------------------------------
+-----------------------------------
+| epoch              | 18         |
+| stats_g/mean       | 0.98717016 |
+| stats_g/std        | 0.12130497 |
+| stats_o/mean       | 0.19238201 |
+| stats_o/std        | 0.10876258 |
+| test/episode       | 3800       |
+| test/mean_Q        | -31.335732 |
+| test/returns       | -100       |
+| test/success_rate  | 0          |
+| train/episode      | 3800       |
+| train/returns      | -98.9      |
+| train/success_rate | 0.06       |
+-----------------------------------
+-----------------------------------
+| epoch              | 19         |
+| stats_g/mean       | 0.9871137  |
+| stats_g/std        | 0.12185467 |
+| stats_o/mean       | 0.19219644 |
+| stats_o/std        | 0.10950615 |
+| test/episode       | 4000       |
+| test/mean_Q        | -33.07907  |
+| test/returns       | -98.5      |
+| test/success_rate  | 0.015      |
+| train/episode      | 4000       |
+| train/returns      | -96        |
+| train/success_rate | 0.06       |
+-----------------------------------
+-----------------------------------
+| epoch              | 20         |
+| stats_g/mean       | 0.9870309  |
+| stats_g/std        | 0.12175101 |
+| stats_o/mean       | 0.19206192 |
+| stats_o/std        | 0.11033151 |
+| test/episode       | 4200       |
+| test/mean_Q        | -33.3043   |
+| test/returns       | -99.2      |
+| test/success_rate  | 0.01       |
+| train/episode      | 4200       |
+| train/returns      | -96.1      |
+| train/success_rate | 0.105      |
+-----------------------------------
+Saving periodic policy to ./logs/seed0/ComplexHook-v0_expertexplore/ComplexHook-v0_20250701-210133/policy_20.pkl ...
+-----------------------------------
+| epoch              | 21         |
+| stats_g/mean       | 0.98689836 |
+| stats_g/std        | 0.12092922 |
+| stats_o/mean       | 0.19212827 |
+| stats_o/std        | 0.11076264 |
+| test/episode       | 4400       |
+| test/mean_Q        | -36.948708 |
+| test/returns       | -98.9      |
+| test/success_rate  | 0.01       |
+| train/episode      | 4400       |
+| train/returns      | -95.3      |
+| train/success_rate | 0.1        |
+-----------------------------------
+------------------------------------
+| epoch              | 22          |
+| stats_g/mean       | 0.98694676  |
+| stats_g/std        | 0.122101426 |
+| stats_o/mean       | 0.19239044  |
+| stats_o/std        | 0.11155071  |
+| test/episode       | 4600        |
+| test/mean_Q        | -34.663036  |
+| test/returns       | -97.5       |
+| test/success_rate  | 0.025       |
+| train/episode      | 4600        |
+| train/returns      | -90.6       |
+| train/success_rate | 0.21        |
+------------------------------------
+New best success rate: 0.025. Saving policy to ./logs/seed0/ComplexHook-v0_expertexplore/ComplexHook-v0_20250701-210133/policy_best.pkl ...
+------------------------------------
+| epoch              | 23          |
+| stats_g/mean       | 0.9867547   |
+| stats_g/std        | 0.122077145 |
+| stats_o/mean       | 0.19254011  |
+| stats_o/std        | 0.11159877  |
+| test/episode       | 4800        |
+| test/mean_Q        | -38.465816  |
+| test/returns       | -99.7       |
+| test/success_rate  | 0.005       |
+| train/episode      | 4800        |
+| train/returns      | -91         |
+| train/success_rate | 0.21        |
+------------------------------------
+------------------------------------
+| epoch              | 24          |
+| stats_g/mean       | 0.98678637  |
+| stats_g/std        | 0.122318864 |
+| stats_o/mean       | 0.19272098  |
+| stats_o/std        | 0.11149671  |
+| test/episode       | 5000        |
+| test/mean_Q        | -39.15499   |
+| test/returns       | -100        |
+| test/success_rate  | 0.005       |
+| train/episode      | 5000        |
+| train/returns      | -92.7       |
+| train/success_rate | 0.185       |
+------------------------------------
+------------------------------------
+| epoch              | 25          |
+| stats_g/mean       | 0.9864206   |
+| stats_g/std        | 0.123050034 |
+| stats_o/mean       | 0.19288155  |
+| stats_o/std        | 0.11149864  |
+| test/episode       | 5200        |
+| test/mean_Q        | -36.49129   |
+| test/returns       | -98.4       |
+| test/success_rate  | 0.045       |
+| train/episode      | 5200        |
+| train/returns      | -90.2       |
+| train/success_rate | 0.205       |
+------------------------------------
+New best success rate: 0.045. Saving policy to ./logs/seed0/ComplexHook-v0_expertexplore/ComplexHook-v0_20250701-210133/policy_best.pkl ...
+Saving periodic policy to ./logs/seed0/ComplexHook-v0_expertexplore/ComplexHook-v0_20250701-210133/policy_25.pkl ...
+-----------------------------------
+| epoch              | 26         |
+| stats_g/mean       | 0.9862538  |
+| stats_g/std        | 0.12287611 |
+| stats_o/mean       | 0.19314075 |
+| stats_o/std        | 0.11230872 |
+| test/episode       | 5400       |
+| test/mean_Q        | -39.24173  |
+| test/returns       | -99.3      |
+| test/success_rate  | 0.015      |
+| train/episode      | 5400       |
+| train/returns      | -90.4      |
+| train/success_rate | 0.21       |
+-----------------------------------
+------------------------------------
+| epoch              | 27          |
+| stats_g/mean       | 0.9860665   |
+| stats_g/std        | 0.122897245 |
+| stats_o/mean       | 0.19331178  |
+| stats_o/std        | 0.112294696 |
+| test/episode       | 5600        |
+| test/mean_Q        | -37.07239   |
+| test/returns       | -98.7       |
+| test/success_rate  | 0.02        |
+| train/episode      | 5600        |
+| train/returns      | -91.3       |
+| train/success_rate | 0.2         |
+------------------------------------
+-----------------------------------
+| epoch              | 28         |
+| stats_g/mean       | 0.9857412  |
+| stats_g/std        | 0.12184993 |
+| stats_o/mean       | 0.19340213 |
+| stats_o/std        | 0.11182177 |
+| test/episode       | 5800       |
+| test/mean_Q        | -35.86947  |
+| test/returns       | -98.7      |
+| test/success_rate  | 0.025      |
+| train/episode      | 5800       |
+| train/returns      | -86.6      |
+| train/success_rate | 0.295      |
+-----------------------------------
+-----------------------------------
+| epoch              | 29         |
+| stats_g/mean       | 0.9855027  |
+| stats_g/std        | 0.1220549  |
+| stats_o/mean       | 0.1935608  |
+| stats_o/std        | 0.11161964 |
+| test/episode       | 6000       |
+| test/mean_Q        | -36.79089  |
+| test/returns       | -95.8      |
+| test/success_rate  | 0.065      |
+| train/episode      | 6000       |
+| train/returns      | -86.9      |
+| train/success_rate | 0.26       |
+-----------------------------------
+New best success rate: 0.065. Saving policy to ./logs/seed0/ComplexHook-v0_expertexplore/ComplexHook-v0_20250701-210133/policy_best.pkl ...
+------------------------------------
+| epoch              | 30          |
+| stats_g/mean       | 0.9851069   |
+| stats_g/std        | 0.122017235 |
+| stats_o/mean       | 0.19367644  |
+| stats_o/std        | 0.11145695  |
+| test/episode       | 6200        |
+| test/mean_Q        | -35.72754   |
+| test/returns       | -96.2       |
+| test/success_rate  | 0.065       |
+| train/episode      | 6200        |
+| train/returns      | -84.3       |
+| train/success_rate | 0.335       |
+------------------------------------
+New best success rate: 0.065. Saving policy to ./logs/seed0/ComplexHook-v0_expertexplore/ComplexHook-v0_20250701-210133/policy_best.pkl ...
+Saving periodic policy to ./logs/seed0/ComplexHook-v0_expertexplore/ComplexHook-v0_20250701-210133/policy_30.pkl ...
+-----------------------------------
+| epoch              | 31         |
+| stats_g/mean       | 0.984785   |
+| stats_g/std        | 0.12220523 |
+| stats_o/mean       | 0.19379191 |
+| stats_o/std        | 0.11119672 |
+| test/episode       | 6400       |
+| test/mean_Q        | -30.660734 |
+| test/returns       | -89.1      |
+| test/success_rate  | 0.22       |
+| train/episode      | 6400       |
+| train/returns      | -85.7      |
+| train/success_rate | 0.33       |
+-----------------------------------
+New best success rate: 0.22. Saving policy to ./logs/seed0/ComplexHook-v0_expertexplore/ComplexHook-v0_20250701-210133/policy_best.pkl ...
+-----------------------------------
+| epoch              | 32         |
+| stats_g/mean       | 0.984437   |
+| stats_g/std        | 0.12159943 |
+| stats_o/mean       | 0.19390588 |
+| stats_o/std        | 0.11076293 |
+| test/episode       | 6600       |
+| test/mean_Q        | -33.537975 |
+| test/returns       | -96.1      |
+| test/success_rate  | 0.07       |
+| train/episode      | 6600       |
+| train/returns      | -82.9      |
+| train/success_rate | 0.35       |
+-----------------------------------
+------------------------------------
+| epoch              | 33          |
+| stats_g/mean       | 0.9841833   |
+| stats_g/std        | 0.121132664 |
+| stats_o/mean       | 0.19405225  |
+| stats_o/std        | 0.11018419  |
+| test/episode       | 6800        |
+| test/mean_Q        | -33.19278   |
+| test/returns       | -94.7       |
+| test/success_rate  | 0.085       |
+| train/episode      | 6800        |
+| train/returns      | -81.1       |
+| train/success_rate | 0.405       |
+------------------------------------
+-----------------------------------
+| epoch              | 34         |
+| stats_g/mean       | 0.98385066 |
+| stats_g/std        | 0.12065216 |
+| stats_o/mean       | 0.19416292 |
+| stats_o/std        | 0.109531   |
+| test/episode       | 7000       |
+| test/mean_Q        | -34.85672  |
+| test/returns       | -94.8      |
+| test/success_rate  | 0.105      |
+| train/episode      | 7000       |
+| train/returns      | -85.1      |
+| train/success_rate | 0.285      |
+-----------------------------------
+-----------------------------------
+| epoch              | 35         |
+| stats_g/mean       | 0.98357075 |
+| stats_g/std        | 0.12031716 |
+| stats_o/mean       | 0.19418351 |
+| stats_o/std        | 0.1093771  |
+| test/episode       | 7200       |
+| test/mean_Q        | -25.23413  |
+| test/returns       | -85        |
+| test/success_rate  | 0.225      |
+| train/episode      | 7200       |
+| train/returns      | -83        |
+| train/success_rate | 0.355      |
+-----------------------------------
+New best success rate: 0.225. Saving policy to ./logs/seed0/ComplexHook-v0_expertexplore/ComplexHook-v0_20250701-210133/policy_best.pkl ...
+Saving periodic policy to ./logs/seed0/ComplexHook-v0_expertexplore/ComplexHook-v0_20250701-210133/policy_35.pkl ...
+-----------------------------------
+| epoch              | 36         |
+| stats_g/mean       | 0.98328406 |
+| stats_g/std        | 0.1197941  |
+| stats_o/mean       | 0.1941572  |
+| stats_o/std        | 0.10915873 |
+| test/episode       | 7400       |
+| test/mean_Q        | -30.496157 |
+| test/returns       | -95.2      |
+| test/success_rate  | 0.06       |
+| train/episode      | 7400       |
+| train/returns      | -88.6      |
+| train/success_rate | 0.235      |
+-----------------------------------
+------------------------------------
+| epoch              | 37          |
+| stats_g/mean       | 0.9832671   |
+| stats_g/std        | 0.11968565  |
+| stats_o/mean       | 0.19413412  |
+| stats_o/std        | 0.109231815 |
+| test/episode       | 7600        |
+| test/mean_Q        | -31.245049  |
+| test/returns       | -99.4       |
+| test/success_rate  | 0.01        |
+| train/episode      | 7600        |
+| train/returns      | -93.6       |
+| train/success_rate | 0.165       |
+------------------------------------
+-----------------------------------
+| epoch              | 38         |
+| stats_g/mean       | 0.98331803 |
+| stats_g/std        | 0.12033385 |
+| stats_o/mean       | 0.19408879 |
+| stats_o/std        | 0.10941744 |
+| test/episode       | 7800       |
+| test/mean_Q        | -30.110325 |
+| test/returns       | -99        |
+| test/success_rate  | 0.01       |
+| train/episode      | 7800       |
+| train/returns      | -94.4      |
+| train/success_rate | 0.17       |
+-----------------------------------
+------------------------------------
+| epoch              | 39          |
+| stats_g/mean       | 0.98318833  |
+| stats_g/std        | 0.120421894 |
+| stats_o/mean       | 0.19402333  |
+| stats_o/std        | 0.10960267  |
+| test/episode       | 8000        |
+| test/mean_Q        | -27.66828   |
+| test/returns       | -98.4       |
+| test/success_rate  | 0.02        |
+| train/episode      | 8000        |
+| train/returns      | -89.6       |
+| train/success_rate | 0.27        |
+------------------------------------
+-----------------------------------
+| epoch              | 40         |
+| stats_g/mean       | 0.9829726  |
+| stats_g/std        | 0.12028519 |
+| stats_o/mean       | 0.19401832 |
+| stats_o/std        | 0.10941894 |
+| test/episode       | 8200       |
+| test/mean_Q        | -28.574013 |
+| test/returns       | -98.6      |
+| test/success_rate  | 0.015      |
+| train/episode      | 8200       |
+| train/returns      | -89.2      |
+| train/success_rate | 0.31       |
+-----------------------------------
+Saving periodic policy to ./logs/seed0/ComplexHook-v0_expertexplore/ComplexHook-v0_20250701-210133/policy_40.pkl ...
+-----------------------------------
+| epoch              | 41         |
+| stats_g/mean       | 0.9827645  |
+| stats_g/std        | 0.1198891  |
+| stats_o/mean       | 0.19407961 |
+| stats_o/std        | 0.10953425 |
+| test/episode       | 8400       |
+| test/mean_Q        | -28.838264 |
+| test/returns       | -99        |
+| test/success_rate  | 0.01       |
+| train/episode      | 8400       |
+| train/returns      | -88.4      |
+| train/success_rate | 0.3        |
+-----------------------------------
+------------------------------------
+| epoch              | 42          |
+| stats_g/mean       | 0.98262924  |
+| stats_g/std        | 0.120070845 |
+| stats_o/mean       | 0.19409257  |
+| stats_o/std        | 0.10927443  |
+| test/episode       | 8600        |
+| test/mean_Q        | -27.657177  |
+| test/returns       | -98.7       |
+| test/success_rate  | 0.015       |
+| train/episode      | 8600        |
+| train/returns      | -88.4       |
+| train/success_rate | 0.3         |
+------------------------------------
+-----------------------------------
+| epoch              | 43         |
+| stats_g/mean       | 0.982585   |
+| stats_g/std        | 0.12027029 |
+| stats_o/mean       | 0.19413345 |
+| stats_o/std        | 0.10894436 |
+| test/episode       | 8800       |
+| test/mean_Q        | -29.7647   |
+| test/returns       | -99.3      |
+| test/success_rate  | 0.01       |
+| train/episode      | 8800       |
+| train/returns      | -88.4      |
+| train/success_rate | 0.295      |
+-----------------------------------
+------------------------------------
+| epoch              | 44          |
+| stats_g/mean       | 0.9824433   |
+| stats_g/std        | 0.120152116 |
+| stats_o/mean       | 0.19420035  |
+| stats_o/std        | 0.10851654  |
+| test/episode       | 9000        |
+| test/mean_Q        | -29.671309  |
+| test/returns       | -99.4       |
+| test/success_rate  | 0.01        |
+| train/episode      | 9000        |
+| train/returns      | -83.5       |
+| train/success_rate | 0.4         |
+------------------------------------
+------------------------------------
+| epoch              | 45          |
+| stats_g/mean       | 0.9822863   |
+| stats_g/std        | 0.12052256  |
+| stats_o/mean       | 0.19425538  |
+| stats_o/std        | 0.108438924 |
+| test/episode       | 9200        |
+| test/mean_Q        | -27.949644  |
+| test/returns       | -99.1       |
+| test/success_rate  | 0.015       |
+| train/episode      | 9200        |
+| train/returns      | -83.4       |
+| train/success_rate | 0.43        |
+------------------------------------
+Saving periodic policy to ./logs/seed0/ComplexHook-v0_expertexplore/ComplexHook-v0_20250701-210133/policy_45.pkl ...
+-----------------------------------
+| epoch              | 46         |
+| stats_g/mean       | 0.98205227 |
+| stats_g/std        | 0.12042942 |
+| stats_o/mean       | 0.19431013 |
+| stats_o/std        | 0.10793407 |
+| test/episode       | 9400       |
+| test/mean_Q        | -28.490599 |
+| test/returns       | -98.8      |
+| test/success_rate  | 0.025      |
+| train/episode      | 9400       |
+| train/returns      | -81        |
+| train/success_rate | 0.43       |
+-----------------------------------
+------------------------------------
+| epoch              | 47          |
+| stats_g/mean       | 0.9820246   |
+| stats_g/std        | 0.12080731  |
+| stats_o/mean       | 0.19440462  |
+| stats_o/std        | 0.107474804 |
+| test/episode       | 9600        |
+| test/mean_Q        | -27.102917  |
+| test/returns       | -90.1       |
+| test/success_rate  | 0.215       |
+| train/episode      | 9600        |
+| train/returns      | -80.9       |
+| train/success_rate | 0.415       |
+------------------------------------
+-----------------------------------
+| epoch              | 48         |
+| stats_g/mean       | 0.9818534  |
+| stats_g/std        | 0.12082386 |
+| stats_o/mean       | 0.19444528 |
+| stats_o/std        | 0.10719101 |
+| test/episode       | 9800       |
+| test/mean_Q        | -30.895592 |
+| test/returns       | -98.1      |
+| test/success_rate  | 0.04       |
+| train/episode      | 9800       |
+| train/returns      | -83.5      |
+| train/success_rate | 0.395      |
+-----------------------------------
+------------------------------------
+| epoch              | 49          |
+| stats_g/mean       | 0.9815956   |
+| stats_g/std        | 0.120633595 |
+| stats_o/mean       | 0.19446602  |
+| stats_o/std        | 0.10679762  |
+| test/episode       | 10000       |
+| test/mean_Q        | -29.18186   |
+| test/returns       | -94.6       |
+| test/success_rate  | 0.075       |
+| train/episode      | 10000       |
+| train/returns      | -87         |
+| train/success_rate | 0.31        |
+------------------------------------
+-----------------------------------
+| epoch              | 50         |
+| stats_g/mean       | 0.9815052  |
+| stats_g/std        | 0.12033909 |
+| stats_o/mean       | 0.19452913 |
+| stats_o/std        | 0.10626886 |
+| test/episode       | 10200      |
+| test/mean_Q        | -28.597967 |
+| test/returns       | -97.6      |
+| test/success_rate  | 0.04       |
+| train/episode      | 10200      |
+| train/returns      | -86.8      |
+| train/success_rate | 0.305      |
+-----------------------------------
+Saving periodic policy to ./logs/seed0/ComplexHook-v0_expertexplore/ComplexHook-v0_20250701-210133/policy_50.pkl ...
+------------------------------------
+| epoch              | 51          |
+| stats_g/mean       | 0.9815044   |
+| stats_g/std        | 0.120741636 |
+| stats_o/mean       | 0.19460846  |
+| stats_o/std        | 0.10613499  |
+| test/episode       | 10400       |
+| test/mean_Q        | -30.397337  |
+| test/returns       | -97.6       |
+| test/success_rate  | 0.045       |
+| train/episode      | 10400       |
+| train/returns      | -87.4       |
+| train/success_rate | 0.295       |
+------------------------------------
+------------------------------------
+| epoch              | 52          |
+| stats_g/mean       | 0.981453    |
+| stats_g/std        | 0.120479465 |
+| stats_o/mean       | 0.19459686  |
+| stats_o/std        | 0.10598216  |
+| test/episode       | 10600       |
+| test/mean_Q        | -23.205776  |
+| test/returns       | -92.1       |
+| test/success_rate  | 0.135       |
+| train/episode      | 10600       |
+| train/returns      | -86.6       |
+| train/success_rate | 0.295       |
+------------------------------------
+-----------------------------------
+| epoch              | 53         |
+| stats_g/mean       | 0.9813225  |
+| stats_g/std        | 0.1201153  |
+| stats_o/mean       | 0.19449775 |
+| stats_o/std        | 0.10607703 |
+| test/episode       | 10800      |
+| test/mean_Q        | -26.927116 |
+| test/returns       | -98.2      |
+| test/success_rate  | 0.03       |
+| train/episode      | 10800      |
+| train/returns      | -90.5      |
+| train/success_rate | 0.225      |
+-----------------------------------
+------------------------------------
+| epoch              | 54          |
+| stats_g/mean       | 0.98123384  |
+| stats_g/std        | 0.119662456 |
+| stats_o/mean       | 0.19437256  |
+| stats_o/std        | 0.1062865   |
+| test/episode       | 11000       |
+| test/mean_Q        | -23.250715  |
+| test/returns       | -98.1       |
+| test/success_rate  | 0.025       |
+| train/episode      | 11000       |
+| train/returns      | -94.6       |
+| train/success_rate | 0.135       |
+------------------------------------
+------------------------------------
+| epoch              | 55          |
+| stats_g/mean       | 0.9812465   |
+| stats_g/std        | 0.119387716 |
+| stats_o/mean       | 0.19431381  |
+| stats_o/std        | 0.10649949  |
+| test/episode       | 11200       |
+| test/mean_Q        | -23.70464   |
+| test/returns       | -99.4       |
+| test/success_rate  | 0.01        |
+| train/episode      | 11200       |
+| train/returns      | -95.8       |
+| train/success_rate | 0.115       |
+------------------------------------
+Saving periodic policy to ./logs/seed0/ComplexHook-v0_expertexplore/ComplexHook-v0_20250701-210133/policy_55.pkl ...
+-----------------------------------
+| epoch              | 56         |
+| stats_g/mean       | 0.98131895 |
+| stats_g/std        | 0.11977484 |
+| stats_o/mean       | 0.19428337 |
+| stats_o/std        | 0.10657363 |
+| test/episode       | 11400      |
+| test/mean_Q        | -25.182789 |
+| test/returns       | -98.9      |
+| test/success_rate  | 0.01       |
+| train/episode      | 11400      |
+| train/returns      | -93.9      |
+| train/success_rate | 0.195      |
+-----------------------------------
+-----------------------------------
+| epoch              | 57         |
+| stats_g/mean       | 0.9811756  |
+| stats_g/std        | 0.11947042 |
+| stats_o/mean       | 0.19428882 |
+| stats_o/std        | 0.10644047 |
+| test/episode       | 11600      |
+| test/mean_Q        | -23.549116 |
+| test/returns       | -97.8      |
+| test/success_rate  | 0.03       |
+| train/episode      | 11600      |
+| train/returns      | -86.3      |
+| train/success_rate | 0.375      |
+-----------------------------------
+-----------------------------------
+| epoch              | 58         |
+| stats_g/mean       | 0.9810706  |
+| stats_g/std        | 0.11937314 |
+| stats_o/mean       | 0.19433823 |
+| stats_o/std        | 0.10602628 |
+| test/episode       | 11800      |
+| test/mean_Q        | -25.380762 |
+| test/returns       | -96.8      |
+| test/success_rate  | 0.07       |
+| train/episode      | 11800      |
+| train/returns      | -82.9      |
+| train/success_rate | 0.4        |
+-----------------------------------
+------------------------------------
+| epoch              | 59          |
+| stats_g/mean       | 0.9809642   |
+| stats_g/std        | 0.119597025 |
+| stats_o/mean       | 0.19433376  |
+| stats_o/std        | 0.10590066  |
+| test/episode       | 12000       |
+| test/mean_Q        | -26.876633  |
+| test/returns       | -96.7       |
+| test/success_rate  | 0.065       |
+| train/episode      | 12000       |
+| train/returns      | -84.4       |
+| train/success_rate | 0.39        |
+------------------------------------
+-----------------------------------
+| epoch              | 60         |
+| stats_g/mean       | 0.9809447  |
+| stats_g/std        | 0.11990104 |
+| stats_o/mean       | 0.19441183 |
+| stats_o/std        | 0.10571498 |
+| test/episode       | 12200      |
+| test/mean_Q        | -24.12077  |
+| test/returns       | -90.3      |
+| test/success_rate  | 0.185      |
+| train/episode      | 12200      |
+| train/returns      | -85.8      |
+| train/success_rate | 0.325      |
+-----------------------------------
+Saving periodic policy to ./logs/seed0/ComplexHook-v0_expertexplore/ComplexHook-v0_20250701-210133/policy_60.pkl ...
